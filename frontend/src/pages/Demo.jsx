@@ -1,27 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFarmers } from "../store/userSlice";
+import { fetchCompanyData } from "../store/companySlice";
 
 const Demo = () => {
     const dispatch = useDispatch();
-    const { farmers, farmersStatus, farmersError } = useSelector((state) => state.user);
-      
-    console.log(farmers)
-  useEffect(() => {
-    dispatch(fetchFarmers());
-  }, [dispatch]);
 
-  
-  
+    // ✅ Ensure you're selecting the correct state path
+    const { company, loading, error } = useSelector((state) => {
+        console.log("Full Redux State:", state.company); // Debug Redux state
+        return state.company.company;
+    });
 
-  if (farmersStatus === "loading") return <p>Loading...</p>;
-  if (farmersStatus === "failed") return <p>Error: {farmersError}</p>;
+    useEffect(() => {
+        dispatch(fetchCompanyData());
+    }, [dispatch]);
 
-  return (
+
+    if (!company) {
+        return <p>No company data available.</p>;
+    }
+
+    return (
         <div>
-            ehllo
+            <h1>Welcome, {company.firstName} {company.lastName}</h1>
+            <p>Company Name: {company.companyName}</p>
+            <p>Email: {company.email}</p>
+            <p>GST: {company.gst}</p>
         </div>
-  )
-}
+    );
+};
 
-export default Demo
+export default Demo;

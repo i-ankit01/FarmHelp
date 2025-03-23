@@ -62,7 +62,7 @@ exports.getFarmers = catchAsyncError(async (req, res, next) => {
 
 // ✅ Get a single farmer by ID
 exports.getFarmerById = catchAsyncError(async (req, res, next) => {
-  const farmer = await Farmer.findById(req.params.id);
+  const farmer = await Farmer.findById(req.params.id).populate("orders");
   if (!farmer) {
     return next(new ErrorHandler("Farmer not found", 404));
   }

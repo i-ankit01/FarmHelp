@@ -74,7 +74,7 @@ exports.getCompanyById = catchAsyncError(async (req, res, next) => {
 
 // ✅ Place an Order (Company orders from a Farmer)
 exports.placeOrder = catchAsyncError(async (req, res, next) => {
-  const { farmerId, crops, reqArea, amount } = req.body;
+  const { farmerId, crops, weight, amount } = req.body;
 
   const company = await Company.findById(req.user.id);
   if (!company) {
@@ -83,7 +83,7 @@ exports.placeOrder = catchAsyncError(async (req, res, next) => {
 
   company.orders.push({
     to: farmerId,
-    reqArea,
+    weight,
     crops,
     amount,
   });

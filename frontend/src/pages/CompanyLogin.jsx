@@ -21,8 +21,10 @@ export function CompanyLogin({ className, ...props }) {
         email,
         password,
       }, { withCredentials: true });
+      console.log(response)
 
       if (response.data.success) {
+        localStorage.setItem("company_token", response.data.token);
         navigate("/dashboard/company"); // Redirect to dashboard after login
       }
     } catch (error) {

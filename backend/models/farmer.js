@@ -3,6 +3,18 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
+const orderSubSchema = new mongoose.Schema({
+  companyName: String,
+  farmerName : String,
+  crop: String,
+  quantity: Number,
+  price: Number,
+  companyId : String,
+  farmerId : String,
+  status: { type: String, enum: ["Pending", "Accepted", "Rejected", "Completed"], default: "Pending" },
+}, { _id: false });
+
+
 const farmerSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -55,22 +67,12 @@ const farmerSchema = new mongoose.Schema({
     select: false,
   },
   crops: {
-    type: [String], // ✅ This makes it an array of strings
+    type: [String], // ✅ Array of crop names
     default: [],
   },
-  orders: [
-    {
-      by: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Company",
-      },
-      company: String,
-      reqArea: Number,
-      crops: String,
-      amount: Number,
-    },
-  ],
+  orders: [orderSubSchema]
 });
+
 
 // ✅ Encrypt password before saving
 farmerSchema.pre("save", async function (next) {

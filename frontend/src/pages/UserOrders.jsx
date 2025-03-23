@@ -201,34 +201,34 @@ export default function UserOrders() {
           {activeTab === "pending" && (
             <div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                {pendingOrders.map((order) => (
+                {user?.farmer?.orders?.map((order) => (
                   <div key={order.id} className="rounded-lg border bg-white p-6 shadow-md">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                       <div className="mb-4 lg:mb-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-lg font-medium">{order.companyName}</h3>
+                          <h3 className="text-lg font-medium">companyname</h3>
                           <span className="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
                             Pending
                           </span>
                         </div>
-                        <p className="text-sm text-gray-500">{order.location}</p>
+                        <p className="text-sm text-gray-500">location</p>
 
                         <div className="mt-4 grid grid-cols-2 gap-4">
                           <div>
                             <p className="text-xs text-gray-500">Crop</p>
-                            <p className="font-medium">{order.crop}</p>
+                            <p className="font-medium">crop</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Requested Weight</p>
-                            <p className="font-medium">{order.requestedWeight} quintals</p>
+                            <p className="font-medium">weight quintals</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Offered Amount</p>
-                            <p className="font-medium text-green-600">₹{order.offeredAmount.toLocaleString()}</p>
+                            <p className="font-medium text-green-600">₹amount</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Date</p>
-                            <p className="font-medium">{new Date(order.date).toLocaleDateString()}</p>
+                            <p className="font-medium">date</p>
                           </div>
                         </div>
                       </div>

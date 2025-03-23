@@ -1,15 +1,21 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
+  companyName : String,
+  farmerName : String,
   crop: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Crop", // ✅ References Crop model
+    type: String,
     required: [true, "Crop is required"],
   },
   quantity: {
     type: Number,
     required: [true, "Quantity is required"],
     min: [1, "Quantity must be at least 1"],
+  },
+  price: {
+    type: Number,
+    required: [true, "Price is required"],
+    min: [1, "Price must be at least 1"],
   },
   buyer: {
     type: mongoose.Schema.Types.ObjectId,

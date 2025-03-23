@@ -17,52 +17,62 @@ import {
 } from "lucide-react"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFarmers } from "../store/userSlice";
+import CompanySidebar from "../components/CompanySidebar";
+import Footer from "../components/Footer";
+import { fetchCompanyData } from "../store/companySlice";
 
 export default function FindFarmers() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [selectedCrop, setSelectedCrop] = useState("Wheat")
-  const [isLoading, setIsLoading] = useState(false)
-  const [priceOffers, setPriceOffers] = useState({})
-  const [demandWeights, setDemandWeights] = useState({})
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [selectedCrop, setSelectedCrop] = useState("Wheat");
+    const [isLoading, setIsLoading] = useState(false);
+    const [priceOffers, setPriceOffers] = useState({});
+    const [demandWeights, setDemandWeights] = useState({});
 
-  const dispatch = useDispatch();
-  const { farmers = [], farmersStatus, farmersError } = useSelector((state) => {
-    console.log("Farmers state in Redux:", state.user.farmers);
-    return state.user
-  });
-  
+    const dispatch = useDispatch();
+    
+    // 🔹 Fetch Farmers from Redux store
+    const { farmers = [], farmersStatus, farmersError } = useSelector((state) => state.user);
+    
+    // 🔹 Fetch Company data from Redux store
+    const { company, loading, error } = useSelector((state) => state.company || { company: null, loading: false, error: null });
+    // console.log(company?.company?.companyName)
+    // 🔹 useEffect Hooks - Always at the top level (before any conditions)
+    useEffect(() => {
+        dispatch(fetchFarmers());
+    }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(fetchFarmers());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchCompanyData());
+    }, [dispatch]);
 
-
-  // Sample company data
-  const companyData = {
-    companyName: "Green Harvest Foods Ltd.",
-    gstin: "22AAAAA0000A1Z5",
-  }
-
-  // Available crops for filtering
-  const availableCrops = ["Wheat", "Rice", "Potato", "Oats", "Pulses", "Maize", "Sugarcane"]
-
-  // Filtered farmers based on selected crop
-  const [filteredFarmers, setFilteredFarmers] = useState([])
-
-  // Apply filters
-  useEffect(() => {
-    console.log("Filtering farmers:", farmers);
-    if (farmers.length > 0) {
-        setIsLoading(true);
-
-        setTimeout(() => {
-            const filtered = farmers.filter((farmer) => farmer.crops?.includes(selectedCrop));
-            console.log(selectedCrop)
-            setFilteredFarmers(filtered);
-            setIsLoading(false);
-        }, 500);
+    // 🔹 Handle Loading/Error States - Using Conditional Rendering (Not Early Return)
+    let content;
+    if (loading) {
+        content = <p>Loading company data...</p>;
+    } else if (error) {
+        content = <p>Error: {error}</p>;
+    } else if (!company) {
+        content = <p>No company data available.</p>;
     }
-}, [selectedCrop, farmers]); // ✅ Ensure farmers exists before filtering
+
+    // 🔹 Available crops for filtering
+    const availableCrops = ["Wheat", "Rice", "Potato", "Oats", "Pulses", "Maize", "Sugarcane"];
+
+    // 🔹 Filtered farmers based on selected crop
+    const [filteredFarmers, setFilteredFarmers] = useState([]);
+
+    useEffect(() => {
+        console.log("Filtering farmers:", farmers);
+        if (farmers.length > 0) {
+            setIsLoading(true);
+            setTimeout(() => {
+                const filtered = farmers.filter((farmer) => farmer.crops?.includes(selectedCrop));
+                console.log(selectedCrop);
+                setFilteredFarmers(filtered);
+                setIsLoading(false);
+            }, 500);
+        }
+    }, [selectedCrop, farmers]); // ✅ Ensure farmers exists before filtering
 
 
   // Handle price input change
@@ -82,59 +92,73 @@ export default function FindFarmers() {
   }
 
   // Handle request submission
-  const handleSubmitRequest = (farmer) => {
-    const price = priceOffers[farmer.id]
-    const weight = demandWeights[farmer.id]
-
+  const submitRequest = async (farmerId, farmerName, crop, price, weight) => {
+    console.log(farmerId, farmerName, crop, price, weight)
+    try {
+      const response = await fetch('http://localhost:3000/api/v1/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          companyName : company?.company?.companyName,
+          farmerName : farmerName,
+          farmerId,
+          crop,
+          price : price, // Correct key name based on backend
+          demandWeight: weight,
+          companyId: company?.company?._id, // Replace with actual company ID
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to submit request');
+      }
+      
+  
+      const data = await response.json();
+      console.log('Order created successfully:', data);
+      return data;
+    } catch (error) {
+      console.error('Error submitting request:', error);
+      return null;
+    }
+  };
+  
+  const handleSubmitRequest = async (farmer) => {
+    const price = priceOffers[farmer.id];
+    const weight = demandWeights[farmer.id];
+  
     if (!price || isNaN(price) || price <= 0) {
-      alert("Please enter a valid price")
-      return
+      alert('Please enter a valid price');
+      return;
     }
-
+  
     if (!weight || isNaN(weight) || weight <= 0) {
-      alert("Please enter a valid demand weight")
-      return
+      alert('Please enter a valid demand weight');
+      return;
     }
-
-    // In a real application, you would send a request to your backend:
-    // const submitRequest = async (farmerId, crop, price, weight) => {
-    //   try {
-    //     const response = await fetch('/api/submit-request', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({
-    //         farmerId,
-    //         crop: selectedCrop,
-    //         pricePerQuintal: price,
-    //         demandWeight: weight,
-    //         companyId: 'your-company-id'
-    //       }),
-    //     })
-    //
-    //     if (!response.ok) {
-    //       throw new Error('Failed to submit request')
-    //     }
-    //
-    //     // Handle success
-    //   } catch (error) {
-    //     console.error("Error submitting request:", error)
-    //   }
-    // }
-
-    alert(`Request sent to ${farmer.name} for ${weight} quintals of ${selectedCrop} at ₹${price} per quintal`)
-
-    // Reset the inputs for this farmer
-    setPriceOffers({
-      ...priceOffers,
-      [farmer.id]: "",
-    })
-    setDemandWeights({
-      ...demandWeights,
-      [farmer.id]: "",
-    })
-  }
+  
+    // Send request to backend
+    const orderResponse = await submitRequest(farmer._id, farmer.firstName, selectedCrop, price, weight);
+    console.log( "order" , orderResponse)
+  
+    if (orderResponse) {
+      alert(`Request sent to ${farmer.firstName} for ${weight} quintals of ${selectedCrop} at ₹${price} per quintal`);
+  
+      // Reset inputs for this farmer
+      setPriceOffers((prev) => ({
+        ...prev,
+        [farmer.id]: '',
+      }));
+      setDemandWeights((prev) => ({
+        ...prev,
+        [farmer.id]: '',
+      }));
+    } else {
+      alert('Failed to submit order request. Please try again.');
+    }
+  };
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -169,7 +193,11 @@ export default function FindFarmers() {
               <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center overflow-hidden">
                 <User className="h-5 w-5 text-green-600" />
               </div>
-              <span className="hidden md:inline-block text-sm font-medium">{companyData.companyName}</span>
+              <span className="hidden md:inline-block text-sm font-medium">{company ? (
+    <h1>{company?.company?.companyName}</h1>
+) : (
+    <p>No company data available.</p>
+)}</span>
               <ChevronDown className="h-4 w-4 text-gray-500" />
             </div>
           </div>
@@ -177,47 +205,10 @@ export default function FindFarmers() {
       </header>
 
       <div className="flex flex-1">
-        {/* Sidebar */}
-        <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white border-r shadow-sm transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:z-auto md:w-64 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
-        >
-          <div className="flex h-16 items-center border-b px-6">
-            <h2 className="text-lg font-semibold truncate">{companyData.companyName}</h2>
-          </div>
-          <nav className="space-y-6 p-4">
-            <div className="space-y-1">
-              <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-                <Home className="h-5 w-5" />
-                <span>Dashboard</span>
-              </a>
-              <a
-                href="#"
-                className="flex items-center gap-3 rounded-md bg-green-50 px-3 py-2 text-green-700 font-medium"
-              >
-                <Users className="h-5 w-5" />
-                <span>Find Farmers</span>
-              </a>
-              <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-                <Package className="h-5 w-5" />
-                <span>Orders</span>
-              </a>
-            </div>
-
-            <div className="space-y-1">
-              <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-                <Settings className="h-5 w-5" />
-                <span>Settings</span>
-              </a>
-              <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-                <HelpCircle className="h-5 w-5" />
-                <span>Help</span>
-              </a>
-            </div>
-          </nav>
-        </aside>
+        <CompanySidebar/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 ml-64">
           <div className="mb-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
@@ -372,6 +363,8 @@ export default function FindFarmers() {
           )}
         </main>
       </div>
+      <Footer/>
+
     </div>
   )
 }
