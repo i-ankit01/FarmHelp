@@ -36,6 +36,7 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
     buyer: companyId,
     seller: farmerId,
     status: "Pending",
+    uniqueKey: Number(`${Date.now()}${Math.floor(Math.random() * 100000)}`)
   });
 
   // 🔹 Push order ID to Farmer's orders array
@@ -47,7 +48,8 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
     crop: newOrder.crop,
     quantity: newOrder.quantity,
     price: newOrder.price,
-    status: newOrder.status, // Ensure status field is explicitly included
+    status: newOrder.status,
+    uniqueKey: newOrder.uniqueKey // Ensure status field is explicitly included
   });
   await farmer.save();
   console.log("orders pushed in farmeres")
@@ -62,7 +64,8 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
         companyId : newOrder.buyer,
         quantity: newOrder.quantity,
         price: newOrder.price,
-        status: newOrder.status, // Ensure status field is explicitly included
+        status: newOrder.status,
+        uniqueKey : newOrder.uniqueKey // Ensure status field is explicitly included
       });
     await company.save();
   } catch (error) {

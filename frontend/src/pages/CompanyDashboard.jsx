@@ -17,26 +17,35 @@ import CompanySidebar from "../components/CompanySidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFarmers } from "../store/userSlice";
 import { Link } from "react-router-dom";
+import { fetchCompanyData } from "../store/companySlice";
 
 export default function CompanyDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Sample data for company dashboard
-  const companyData = {
-    companyName: "Green Harvest Foods Ltd.",
-    gstin: "22AAAAA0000A1Z5",
-    totalClients: 78,
-    expenditure: "₹24,50,000",
-    ordersBooked: 124,
-  };
+
   const dispatch = useDispatch();
   const {
     farmers = [],
   } = useSelector((state) => state.user);
 
+  const { company, loading, error } = useSelector((state) => state.company || { company: null, loading: false, error: null });
+
   useEffect(() => {
     dispatch(fetchFarmers());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCompanyData());
+}, [dispatch]);
+
+let content;
+    if (loading) {
+        content = <p>Loading company data...</p>;
+    } else if (error) {
+        content = <p>Error: {error}</p>;
+    } else if (!company) {
+        content = <p>No company data available.</p>;
+    }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -75,7 +84,7 @@ export default function CompanyDashboard() {
                 <User className="h-5 w-5 text-green-600" />
               </div>
               <span className="hidden md:inline-block text-sm font-medium">
-                {companyData.companyName}
+              {company?.company?.companyName}
               </span>
               <ChevronDown className="h-4 w-4 text-gray-500" />
             </div>
@@ -96,9 +105,9 @@ export default function CompanyDashboard() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
                 <h1 className="text-2xl font-bold">
-                  {companyData.companyName}
+                {company?.company?.companyName}
                 </h1>
-                <p className="text-gray-600">GSTIN: {companyData.gstin}</p>
+                <p className="text-gray-600">GSTIN: {company?.company?.gst}</p>
               </div>
               <div className="mt-2 md:mt-0">
                 <Link to={"/farmers/search"} className="rounded-md bg-green-600 cursor-pointer px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
@@ -149,7 +158,7 @@ export default function CompanyDashboard() {
                 <Package className="h-5 w-5 text-green-600" />
               </div>
               <p className="mt-2 text-3xl font-bold">
-                {companyData.ordersBooked}
+              {company?.company?.orders.length}
               </p>
               <p className="mt-1 text-sm text-gray-500">
                 Active purchase orders

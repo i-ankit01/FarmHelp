@@ -11,6 +11,7 @@ const orderSubSchema = new mongoose.Schema({
   price: Number,
   companyId : String,
   farmerId : String,
+  uniqueKey : Number,
   status: { type: String, enum: ["Pending", "Accepted", "Rejected", "Completed"], default: "Pending" },
 }, { _id: false });
 
@@ -70,7 +71,7 @@ const farmerSchema = new mongoose.Schema({
     type: [String], // ✅ Array of crop names
     default: [],
   },
-  orders: [orderSubSchema]
+  orders: [orderSubSchema],
 });
 
 

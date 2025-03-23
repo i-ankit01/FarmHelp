@@ -1,4 +1,4 @@
-import { Home, HelpCircle, Wallet, Repeat, TrendingUp, Users } from "lucide-react";
+import { Home, HelpCircle, ShoppingBag, Wallet, Repeat, TrendingUp, Users } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const CompanySidebar = ({ sidebarOpen }) => {
@@ -7,7 +7,8 @@ const CompanySidebar = ({ sidebarOpen }) => {
   const navItems = [
     { name: "Dashboard", icon: Home, path: "/dashboard/company" },
     { name: "All Farmers", icon: Users, path: "/farmers/search" },
-    { name: "Help", icon: HelpCircle, path: "/help" },
+    { name: "Orders", icon: ShoppingBag, path: "/orders/company" },
+    { name: "Help", icon: HelpCircle, path: "/help/company" },
   ];
 
   return (

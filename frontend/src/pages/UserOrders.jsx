@@ -95,30 +95,30 @@ export default function UserOrders() {
   ]
 
   // Handle order acceptance
-  const handleAcceptOrder = (orderId) => {
-    // In a real application, you would send a request to your backend:
-    // const acceptOrder = async (orderId) => {
-    //   try {
-    //     const response = await fetch('/api/accept-order', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({ orderId }),
-    //     })
-    //
-    //     if (!response.ok) {
-    //       throw new Error('Failed to accept order')
-    //     }
-    //
-    //     // Update local state or refetch orders
-    //   } catch (error) {
-    //     console.error("Error accepting order:", error)
-    //   }
-    // }
-
-    alert(`Order ${orderId} accepted successfully!`)
-  }
+  const handleAcceptOrder = async (farmerId, companyId, uniqueKey) => {
+    console.log(farmerId, companyId, uniqueKey)
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/accept-order/${farmerId}/${companyId}/${uniqueKey}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to accept order");
+      }
+  
+      const data = await response.json();
+      console.log(data.message);
+  
+      // Optionally, update UI state or refetch orders
+      alert(`Order accepted successfully!`);
+    } catch (error) {
+      console.error("Error accepting order:", error);
+    }
+  };
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -201,44 +201,44 @@ export default function UserOrders() {
           {activeTab === "pending" && (
             <div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                {user?.farmer?.orders?.map((order) => (
+                {user?.farmer?.orders ?.filter(order => order.status === "Pending")?.map((order , key) => (
                   <div key={order.id} className="rounded-lg border bg-white p-6 shadow-md">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                       <div className="mb-4 lg:mb-0">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-lg font-medium">companyname</h3>
+                          <h3 className="text-lg font-medium">{order.companyName}</h3>
                           <span className="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
                             Pending
                           </span>
                         </div>
-                        <p className="text-sm text-gray-500">location</p>
+                        <p className="text-sm text-gray-500">Meerut, Uttar Pradesh</p>
 
                         <div className="mt-4 grid grid-cols-2 gap-4">
                           <div>
                             <p className="text-xs text-gray-500">Crop</p>
-                            <p className="font-medium">crop</p>
+                            <p className="font-medium">{order.crop}</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Requested Weight</p>
-                            <p className="font-medium">weight quintals</p>
+                            <p className="font-medium">{order.quantity} Quintals</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Offered Amount</p>
-                            <p className="font-medium text-green-600">₹amount</p>
+                            <p className="font-medium text-green-600">₹ {order.price}</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Date</p>
-                            <p className="font-medium">date</p>
+                            <p className="font-medium">24-03-2025</p>
                           </div>
                         </div>
                       </div>
 
                       <div className="flex flex-col gap-2">
                         <button
-                          onClick={() => handleAcceptOrder(order.id)}
-                          className="inline-flex items-center justify-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                          onClick={() => handleAcceptOrder(order.farmerId , order.companyId , order.uniqueKey )}
+                          className="inline-flex items-center justify-center rounded-md cursor-pointer bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                         >
-                          <Check className="mr-2 h-4 w-4" />
+                          <Check className="mr-2 h-4 w-4 " />
                           Accept Order
                         </button>
                         <button className="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
@@ -250,7 +250,7 @@ export default function UserOrders() {
                 ))}
               </div>
 
-              {pendingOrders.length === 0 && (
+              {user?.farmer?.orders ?.filter(order => order.status === "Pending")?.length === 0 && (
                 <div className="rounded-lg border bg-white p-8 text-center shadow-md">
                   <Package className="mx-auto h-12 w-12 text-gray-400" />
                   <h3 className="mt-2 text-lg font-medium text-gray-900">No pending orders</h3>
@@ -264,8 +264,8 @@ export default function UserOrders() {
           {activeTab === "accepted" && (
             <div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-                {acceptedOrders.map((order) => (
-                  <div key={order.id} className="rounded-lg border bg-white p-6 shadow-md">
+                {user?.farmer?.orders ?.filter(order => order.status === "Accepted")?.map((order, key) => (
+                  <div key={key} className="rounded-lg border bg-white p-6 shadow-md">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                       <div className="mb-4 lg:mb-0">
                         <div className="flex items-center gap-2">
@@ -274,7 +274,7 @@ export default function UserOrders() {
                             Accepted
                           </span>
                         </div>
-                        <p className="text-sm text-gray-500">{order.location}</p>
+                        <p className="text-sm text-gray-500">Meerut, Uttar Pradesh</p>
 
                         <div className="mt-4 grid grid-cols-2 gap-4">
                           <div>
@@ -283,11 +283,11 @@ export default function UserOrders() {
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Requested Weight</p>
-                            <p className="font-medium">{order.requestedWeight} quintals</p>
+                            <p className="font-medium">{order.quantity} Quintals</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Amount</p>
-                            <p className="font-medium text-green-600">₹{order.amount.toLocaleString()}</p>
+                            <p className="font-medium text-green-600">₹{order.price}</p>
                           </div>
                           <div>
                             <p className="text-xs text-gray-500">Payment Status</p>
@@ -324,7 +324,7 @@ export default function UserOrders() {
                 ))}
               </div>
 
-              {acceptedOrders.length === 0 && (
+              {user?.farmer?.orders ?.filter(order => order.status === "Accepted")?.length === 0 && (
                 <div className="rounded-lg border bg-white p-8 text-center shadow-md">
                   <Package className="mx-auto h-12 w-12 text-gray-400" />
                   <h3 className="mt-2 text-lg font-medium text-gray-900">No accepted orders</h3>

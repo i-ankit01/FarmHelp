@@ -15,7 +15,9 @@ import CompanyDashboard from './pages/CompanyDashboard';
 import UserSettings from './pages/UserSettings';
 import UserOrders from './pages/UserOrders';
 import FindFarmers from './pages/FindFarmers';
-import Demo from './pages/demo';
+import UserHelp from './pages/UserHelp';
+import CompanyHelp from './pages/CompanyHelp';
+import CompanyOrder from './pages/CompanyOrder';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -34,7 +36,9 @@ function App() {
           <Route path="/settings/user" element={<UserSettings/>} />
           <Route path="/orders/user" element={<UserOrders/>} />
           <Route path="/farmers/search" element={<FindFarmers/>} />
-          <Route path="/demo" element={<Demo/>} />
+          <Route path="/help/user" element={<UserHelp/>} />
+          <Route path="/help/company" element={<CompanyHelp/>} />
+          <Route path="/orders/company" element={<CompanyOrder/>} />
         </Routes>
       </BrowserRouter>
     </>

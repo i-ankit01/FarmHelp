@@ -1,4 +1,5 @@
 const Farmer = require("../models/farmer");
+const Company = require("../models/company")
 const ErrorHandler = require("../utils/errorHandler");
 const ApiFeatures = require("../utils/apiFeatures");
 const catchAsyncError = require("../middlewares/catchAsyncErrors");
@@ -121,4 +122,60 @@ exports.acceptOrder = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Order accepted successfully",
   });
+}),
+
+exports.completeOrder = catchAsyncError(async (req, res, next) => {
+  const { farmerId, companyId, uniqueKey } = req.params;
+
+  try {
+    console.log(`Received Request - FarmerID: ${farmerId}, CompanyID: ${companyId}, UniqueKey: ${uniqueKey}`);
+
+    if (!farmerId || !companyId || !uniqueKey) {
+      return res.status(400).json({ message: "Missing required parameters" });
+    }
+
+    const farmer = await Farmer.findById(farmerId);
+    if (!farmer) {
+      console.error("Farmer not found");
+      return res.status(404).json({ message: "Farmer not found" });
+    }
+
+    const company = await Company.findById(companyId);
+    if (!company) {
+      console.error("Company not found");
+      return res.status(404).json({ message: "Company not found" });
+    }
+
+    const farmerOrder = farmer.orders.find(order => String(order.uniqueKey) === String(uniqueKey));
+    if (!farmerOrder) {
+      console.error("Order not found in Farmer's records");
+      return res.status(404).json({ message: "Order not found in Farmer's records" });
+    }
+
+    
+    const companyOrder = company.orders.find(order => String(order.uniqueKey) === String(uniqueKey));
+    if (!companyOrder) {
+      console.error("Order not found in Company's records");
+      return res.status(404).json({ message: "Order not found in Company's records" });
+    }
+
+    // Update order status in both records
+    farmerOrder.status = "Accepted";
+    companyOrder.status = "Accepted";
+
+    // Save updated documents
+    await farmer.save();
+    await company.save();
+
+    res.status(200).json({
+      message: "Order accepted successfully",
+      order: farmerOrder, 
+    });
+  } catch (error) {
+    console.error("Error in completeOrder function:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
 });
+
+
+

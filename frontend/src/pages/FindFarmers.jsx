@@ -322,7 +322,7 @@ export default function FindFarmers() {
                               htmlFor={`price-${farmer.id}`}
                               className="block text-sm font-medium text-gray-700 mb-1"
                             >
-                              Offer Price (₹ per quintal)
+                              Offer Price (₹)
                             </label>
                             <div className="flex gap-2">
                               <input

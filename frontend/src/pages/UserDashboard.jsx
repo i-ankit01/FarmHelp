@@ -191,13 +191,15 @@ export default function UserDashboard() {
                   <span className="text-sm text-gray-600">
                     {status === "loading"
                       ? "Loading..."
-                      : user?.farmer.orders.length}{" "}
+                      : user?.farmer?.orders ?.filter(order => order.status === "Pending")?.length}{" "}
                     Pending
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="h-3 w-3 rounded-full bg-green-400"></span>
-                  <span className="text-sm text-gray-600">0 Completed</span>
+                  <span className="text-sm text-gray-600">{status === "loading"
+                      ? "Loading..."
+                      : user?.farmer?.orders ?.filter(order => order.status === "Accepted")?.length}{" "} Completed</span>
                 </div>
               </div>
             </div>

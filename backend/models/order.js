@@ -27,6 +27,7 @@ const orderSchema = new mongoose.Schema({
     ref: "Farmer", // ✅ References Farmer model
     required: [true, "Seller (Farmer) is required"],
   },
+  uniqueKey : Number,
   status: {
     type: String,
     enum: ["Pending", "Accepted", "Rejected", "Completed"],
