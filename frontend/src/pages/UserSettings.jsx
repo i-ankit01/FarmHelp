@@ -1,12 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Bell, ChevronDown, Home, Leaf, Menu, Save, Search, ShoppingBag, User } from "lucide-react"
 import Footer from "../components/Footer"
+import UserSidebar from "../components/UserSiderbar"
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserData } from "../store/userSlice";
+
 
 export default function UserSettings() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  const dispatch = useDispatch();
+  const { user, status } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!user) {
+      console.log("Dispatching fetchUserData...");
+      dispatch(fetchUserData());
+    }
+  }, [dispatch, user]);
   // Initial user data
   const [userData, setUserData] = useState({
     name: "Ankit Kumar",
@@ -93,7 +106,7 @@ export default function UserSettings() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header/Navbar */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
+      <header className="sticky top-0 z-50 w-full border-b bg-white shadow-md">
         <div className="container flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <button className="md:hidden p-2 rounded-md hover:bg-gray-100" onClick={() => setSidebarOpen(!sidebarOpen)}>
@@ -123,7 +136,7 @@ export default function UserSettings() {
               <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                 <User className="h-5 w-5 text-gray-600" />
               </div>
-              <span className="hidden md:inline-block text-sm font-medium">{userData.name}</span>
+              <span className="hidden md:inline-block text-sm font-medium">{status === "loading" ? "Loading..." : user?.farmer.firstName}</span>
               <ChevronDown className="h-4 w-4 text-gray-500" />
             </div>
           </div>
@@ -132,41 +145,20 @@ export default function UserSettings() {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white border-r shadow-sm transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:z-auto md:w-64 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
-        >
-          <div className="flex h-16 items-center border-b px-6">
-            <h2 className="text-lg font-semibold">{userData.name}</h2>
-          </div>
-          <nav className="space-y-1 p-4">
-            <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-              <Home className="h-5 w-5" />
-              <span>Dashboard</span>
-            </a>
-            <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-              <ShoppingBag className="h-5 w-5" />
-              <span>Orders</span>
-            </a>
-            <a href="#" className="flex items-center gap-3 rounded-md bg-green-50 px-3 py-2 text-green-700 font-medium">
-              <User className="h-5 w-5" />
-              <span>Settings</span>
-            </a>
-          </nav>
-        </aside>
+        <UserSidebar/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 bg-[#F9FAFB]">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Account Settings</h1>
             <p className="text-gray-600">Update your profile information</p>
           </div>
 
           {/* Settings Form */}
-          <div className="bg-white rounded-lg border shadow-sm">
+          <div className="bg-white rounded-lg border shadow-md">
             <div className="border-b p-4">
               <h2 className="text-lg font-medium">Personal Information</h2>
             </div>
-
             <form onSubmit={handleSubmit} className="p-6">
               {/* Success and Error Messages */}
               {successMessage && <div className="mb-6 rounded-md bg-green-50 p-4 text-green-700">{successMessage}</div>}
@@ -266,7 +258,7 @@ export default function UserSettings() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-75"
+                  className="inline-flex items-center rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-75"
                 >
                   {isSubmitting ? (
                     <>
@@ -306,26 +298,26 @@ export default function UserSettings() {
           {/* Additional Settings Sections */}
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {/* Password Section */}
-            <div className="bg-white rounded-lg border shadow-sm">
+            <div className="bg-white rounded-lg border shadow-md">
               <div className="border-b p-4">
                 <h2 className="text-lg font-medium">Password</h2>
               </div>
               <div className="p-6">
                 <p className="text-sm text-gray-600 mb-4">Update your password to keep your account secure.</p>
-                <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                   Change Password
                 </button>
               </div>
             </div>
 
             {/* Notifications Section */}
-            <div className="bg-white rounded-lg border shadow-sm">
+            <div className="bg-white rounded-lg border shadow-md">
               <div className="border-b p-4">
                 <h2 className="text-lg font-medium">Notifications</h2>
               </div>
               <div className="p-6">
                 <p className="text-sm text-gray-600 mb-4">Configure how you receive notifications and updates.</p>
-                <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                   Manage Notifications
                 </button>
               </div>
@@ -333,7 +325,7 @@ export default function UserSettings() {
           </div>
 
           {/* Danger Zone */}
-          <div className="mt-8 bg-white rounded-lg border border-red-200 shadow-sm">
+          <div className="mt-8 bg-white rounded-lg border border-red-200 shadow-md">
             <div className="border-b border-red-200 p-4">
               <h2 className="text-lg font-medium text-red-600">Danger Zone</h2>
             </div>
@@ -341,7 +333,7 @@ export default function UserSettings() {
               <p className="text-sm text-gray-600 mb-4">
                 Once you delete your account, there is no going back. Please be certain.
               </p>
-              <button className="inline-flex items-center rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-600 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+              <button className="inline-flex items-center rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-600 shadow-md hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                 Delete Account
               </button>
             </div>

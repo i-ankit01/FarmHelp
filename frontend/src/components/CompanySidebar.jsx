@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sprout, ShoppingCart, TrendingUp } from "lucide-react";
 
-const UserSidebar = () => {
+const CompanySidebar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation(); // Get current path
 
@@ -60,4 +60,4 @@ const UserSidebar = () => {
   );
 };
 
-export default UserSidebar;
+export default CompanySidebar;

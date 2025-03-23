@@ -20,11 +20,13 @@ import {
   Users,
 } from "lucide-react"
 import Footer from "../components/Footer"
+import axios from "axios"
 
 export default function CompanyDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [searchCrop, setSearchCrop] = useState("any")
-  const [searchArea, setSearchArea] = useState("")
+  const [searchWeight, setSearchWeight] = useState(""); // State for weight input
+  const [farmers, setFarmers] = useState([]);
 
   // Sample data for company dashboard
   const companyData = {
@@ -37,6 +39,27 @@ export default function CompanyDashboard() {
 
   // Crop options for search
   const cropOptions = ["any", "wheat", "rice", "potato", "oats", "pulses", "maize", "sugarcane"]
+
+  const handleSearch = async () => {
+    try {  
+      const response = await fetch(`http://localhost:3000/api/v1/farmer/search/${searchCrop}`, {
+        method: "GET",
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const data = await response.json(); // ✅ Properly parse JSON response
+      console.log("API Response:", data); // Debugging
+  
+      setFarmers(data.farmers); // ✅ Set farmers correctly
+    } catch (error) {
+      console.error("Error fetching farmers:", error);
+    }
+  };  
+  
+
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -98,47 +121,53 @@ export default function CompanyDashboard() {
             </div>
 
             {/* Search Form */}
-            <div className="space-y-3 rounded-md border p-3">
-              <h3 className="font-medium text-gray-700">Find Farmers</h3>
-              <div className="space-y-3">
-                <div>
-                  <label htmlFor="crop-type" className="block text-sm font-medium text-gray-700 mb-1">
-                    Search by crop
-                  </label>
-                  <select
-                    id="crop-type"
-                    value={searchCrop}
-                    onChange={(e) => setSearchCrop(e.target.value)}
-                    className="w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
-                  >
-                    {cropOptions.map((crop) => (
-                      <option key={crop} value={crop}>
-                        {crop.charAt(0).toUpperCase() + crop.slice(1)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            {/* Search Form */}
+<div className="space-y-3 rounded-md border p-3">
+  <h3 className="font-medium text-gray-700">Find Farmers</h3>
+  <div className="space-y-3">
+    <div>
+      <label htmlFor="crop-type" className="block text-sm font-medium text-gray-700 mb-1">
+        Search by crop
+      </label>
+      <select
+        id="crop-type"
+        value={searchCrop}
+        onChange={(e) => setSearchCrop(e.target.value)}
+        className="w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+      >
+        {cropOptions.map((crop) => (
+          <option key={crop} value={crop}>
+            {crop.charAt(0).toUpperCase() + crop.slice(1)}
+          </option>
+        ))}
+      </select>
+    </div>
 
-                <div>
-                  <label htmlFor="area" className="block text-sm font-medium text-gray-700 mb-1">
-                    Enter area (acres)
-                  </label>
-                  <input
-                    id="area"
-                    type="number"
-                    min="0"
-                    placeholder="Minimum area"
-                    value={searchArea}
-                    onChange={(e) => setSearchArea(e.target.value)}
-                    className="w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
-                  />
-                </div>
+    <div>
+      <label htmlFor="weight" className="block text-sm font-medium text-gray-700 mb-1">
+        Enter Weight (quintals)
+      </label>
+      <input
+        id="weight"
+        type="number"
+        min="0"
+        placeholder="Minimum Weight"
+        value={searchWeight}
+        onChange={(e) => setSearchWeight(e.target.value)}
+        className="w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+      />
+    </div>
 
-                <button className="w-full rounded-md bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                  Search
-                </button>
-              </div>
-            </div>
+    <button
+      className="w-full rounded-md bg-green-600 py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      onClick={handleSearch}
+    >
+      Search
+    </button>
+  </div>
+
+</div>
+
 
             <div className="space-y-1">
               <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
@@ -154,7 +183,7 @@ export default function CompanyDashboard() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 bg-[#F9FAFB]">
           <div className="mb-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>

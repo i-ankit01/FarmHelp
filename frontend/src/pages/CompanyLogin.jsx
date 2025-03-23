@@ -1,26 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import "remixicon/fonts/remixicon.css";
 import { Link } from "react-router-dom";
 import { ButtonLink } from "../components/ButtonLink";
+import axios from "axios";
 
-export function ComapanyLogin({ className, ...props }) {
+export function CompanyLogin({ className, ...props }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    
+    try {
+      const response = await axios.post("http://localhost:3000/api/v1/company/login", {
+        email,
+        password,
+      }, { withCredentials: true });
+
+      if (response.data.success) {
+        navigate("/dashboard/company"); // Redirect to dashboard after login
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Login failed. Try again.");
+    }
+  };
+
   return (
     <>
       <Header />
       <div className="w-full mt-5 flex justify-center items-center">
-            <ButtonLink text="User? Login as User" to="/signin/user" />
-            </div>
+        <ButtonLink text="User? Login as User" to="/signin/user" />
+      </div>
       <div className="flex justify-center items-center mt-5">
         <div className={`flex flex-col gap-6 w-full max-w-lg ${className}`} {...props}>
           <div className="border rounded-lg overflow-hidden">
             <div className="p-6 md:p-8">
               {/* Login Form */}
-              <form className="flex flex-col gap-6">
+              <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
                 <div className="flex flex-col items-center text-center">
                   <h1 className="text-2xl font-bold">Welcome back (Company Login)</h1>
                   <p className="text-gray-600">Login to your Farm Help account</p>
                 </div>
+
+                {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
                 {/* Email */}
                 <div className="grid gap-2">
@@ -31,6 +58,8 @@ export function ComapanyLogin({ className, ...props }) {
                     placeholder="user@gmail.com"
                     required
                     className="p-2 border rounded-md w-full"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -47,6 +76,8 @@ export function ComapanyLogin({ className, ...props }) {
                     type="password"
                     required
                     className="p-2 border rounded-md w-full"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
