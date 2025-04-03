@@ -40,9 +40,9 @@ export default function FarmHelpLanding() {
               </div>
               <div className="flex items-center justify-center">
                 <img
-                  src="https://via.placeholder.com/550x550"
+                  src="https://png.pngtree.com/png-clipart/20220125/original/pngtree-girl-doing-farm-work-png-image_7222872.png"
                   alt="Farm Help Platform"
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover w-100"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function FarmHelpLanding() {
                     <div className="h-10 w-10 rounded-full bg-green-200"></div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">John Smith</p>
+                    <p className="text-sm font-medium">Dherya Pratap</p>
                     <p className="text-sm text-gray-500">Organic Vegetable Farmer</p>
                   </div>
                 </div>
@@ -174,7 +174,7 @@ export default function FarmHelpLanding() {
                     <div className="h-10 w-10 rounded-full bg-green-200"></div>
                   </div>
                   <div>
-                    <p className="text-sm font-medium">Sarah Johnson</p>
+                    <p className="text-sm font-medium">Harsh Sharma</p>
                     <p className="text-sm text-gray-500">Restaurant Owner</p>
                   </div>
                 </div>

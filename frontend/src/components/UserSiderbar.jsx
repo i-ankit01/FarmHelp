@@ -1,4 +1,4 @@
-import { Home, ShoppingBag, User, HelpCircle } from "lucide-react";
+import { Home, ShoppingBag, User, HelpCircle, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sprout, ShoppingCart, TrendingUp } from "lucide-react";
@@ -13,6 +13,7 @@ const UserSidebar = () => {
     { name: "Orders", icon: ShoppingBag, path: "/orders/user" },
     { name: "Settings", icon: User, path: "/settings/user" },
     { name: "Help", icon: HelpCircle, path: "/help/user" },
+    { name: "Farm Help AI", icon: MessageCircle, path: "/chatbot" },
   ];
 
   return (

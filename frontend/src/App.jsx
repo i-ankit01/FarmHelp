@@ -18,6 +18,8 @@ import FindFarmers from './pages/FindFarmers';
 import UserHelp from './pages/UserHelp';
 import CompanyHelp from './pages/CompanyHelp';
 import CompanyOrder from './pages/CompanyOrder';
+import ChatBot from './pages/ChatBot';
+import Demo from './pages/demo';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -39,6 +41,7 @@ function App() {
           <Route path="/help/user" element={<UserHelp/>} />
           <Route path="/help/company" element={<CompanyHelp/>} />
           <Route path="/orders/company" element={<CompanyOrder/>} />
+          <Route path="/chatbot" element={<ChatBot/>} />
         </Routes>
       </BrowserRouter>
     </>
