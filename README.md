@@ -1,4 +1,4 @@
-# Farm Help (Hack Heist 2025)
+# Farm Help 
 
 Farm Help is a platform that connects farmers directly with companies to buy and sell crops, eliminating the need for middlemen. This project aims to create a seamless and efficient marketplace for the agricultural community, helping both farmers and companies streamline their transactions.
 
