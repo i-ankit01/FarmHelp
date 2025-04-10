@@ -24,9 +24,11 @@ app.use(express.static(path.join(__dirname, "../frontend/dist")));
 // Importing all routes
 const farmers = require("./routes/farmer");
 const companies = require("./routes/company");
+const geminiRoutes = require("./routes/gemini");
 
 app.use("/api/v1", farmers);
 app.use("/api/v1", companies);
+app.use("/api/gemini", geminiRoutes);
 
 // Serve React app for all unknown routes
 app.get("*", (req, res) => {

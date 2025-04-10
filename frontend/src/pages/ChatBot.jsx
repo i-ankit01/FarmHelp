@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import ReactMarkdown from "react-markdown"
 import {
   Bell,
   ChevronDown,
@@ -16,6 +17,7 @@ import {
   User,
   Users,
   Trash2,
+  HelpCircle,
 } from "lucide-react"
 
 export default function ChatBot() {
@@ -97,63 +99,53 @@ export default function ChatBot() {
       })
 
       // Make API request to DeepSeek
-      const API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY;
-      console.log("Your API key is " + API_KEY);
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const response = await fetch("http://localhost:3000/api/gemini/generate", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${API_KEY}`,
-          "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
-          "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "model": "deepseek/deepseek-r1:free",
-          "messages": [
-            {
-              "role": "user",
-              "content": userMessage.content
-            }
-          ]
-        })
-        
+          prompt: userMessage.content, // sending prompt as required by your backend
+        }),
       });
-      console.log("sent" + userMessage.content)
-
+    
+      console.log("sent: " + userMessage.content);
+    
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`)
+        throw new Error(`API request failed with status ${response.status}`);
       }
-      
-      const data = await response.json()
+    
+      const data = await response.json();
       console.log(data);
-
+    
       // Add assistant response to chat
       const assistantResponse = {
         id: Date.now() + 1,
         role: "assistant",
-        content: data.response || data.choices?.[0]?.message?.content || "Sorry, I couldn't process your request.",
+        content: data.response || "Sorry, I couldn't process your request.",
         timestamp: new Date().toISOString(),
-      }
-
-      setMessages((prev) => [...prev, assistantResponse])
+      };
+    
+      setMessages((prev) => [...prev, assistantResponse]);
     } catch (err) {
-      console.error("Error fetching response:", err)
-      setError("Failed to get response. Please try again.")
-
+      console.error("Error fetching response:", err);
+      setError("Failed to get response. Please try again.");
+    
       // Add error message to chat
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: "Sorry, I encountered an error while processing your request. Please try again later.",
+          content:
+            "Sorry, I encountered an error while processing your request. Please try again later.",
           timestamp: new Date().toISOString(),
           isError: true,
         },
-      ])
+      ]);
     } finally {
-      setIsLoading(false)
-      inputRef.current?.focus()
+      setIsLoading(false);
+      inputRef.current?.focus();
     }
   }
 
@@ -229,12 +221,12 @@ export default function ChatBot() {
       <div className="flex flex-1">
         {/* Sidebar */}
         <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white border-r shadow-sm transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:z-auto md:w-64 ${
+          className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white border-r shadow-sm transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:z-auto md:w-64 overflow-y-auto ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div className="flex h-16 items-center border-b px-6">
-            <h2 className="text-lg font-semibold">{userData.name}</h2>
+            <h2 className="text-lg font-semibold">Ask Your Doubts</h2>
           </div>
           <nav className="space-y-1 p-4">
             <a href="/dashboard/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
@@ -252,13 +244,17 @@ export default function ChatBot() {
                 <span>Find Farmers</span>
               </a>
             )}
-            <a href="/settings/users" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
+            <a href="/settings/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
               <Settings className="h-5 w-5" />
               <span>Settings</span>
             </a>
-            <a href="#" className="flex items-center gap-3 rounded-md bg-green-50 px-3 py-2 text-green-700 font-medium">
+            <a href="/help/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
+              <HelpCircle className="h-5 w-5" />
+              <span>Help</span>
+            </a>
+            <a href="/farm-ai" className="flex items-center gap-3 rounded-md bg-green-50 px-3 py-2 text-green-700 font-medium">
               <MessageCircle className="h-5 w-5" />
-              <span>ChatBot</span>
+              <span>Farm Help AI</span>
             </a>
           </nav>
 
@@ -301,9 +297,9 @@ export default function ChatBot() {
         </aside>
 
         {/* Main Chat Area */}
-        <main className="flex-1 flex flex-col bg-gray-50">
+        <main className="flex-1 flex flex-col bg-gray-50 relative">
           {/* Chat Header */}
-          <div className="border-b bg-white p-4 shadow-sm">
+          <div className="sticky top-0 z-10 border-b bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
@@ -311,7 +307,7 @@ export default function ChatBot() {
                 </div>
                 <div>
                   <h2 className="text-sm font-medium">Farm Help AI</h2>
-                  <p className="text-xs text-gray-500">Ask me anything about Farm Help</p>
+                  <p className="text-xs text-gray-500">Ask me anything about Farming</p>
                 </div>
               </div>
               <button
@@ -325,7 +321,7 @@ export default function ChatBot() {
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 pt-2">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -340,7 +336,41 @@ export default function ChatBot() {
                         : "bg-white border shadow-sm"
                   }`}
                 >
-                  <div className="whitespace-pre-wrap">{message.content}</div>
+                  {message.role === "user" ? (
+                    <div className="whitespace-pre-wrap">{message.content}</div>
+                  ) : (
+                    <div className="markdown-content">
+                      <ReactMarkdown
+                        components={{
+                          p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                          strong: ({ node, ...props }) => <strong className="font-bold" {...props} />,
+                          em: ({ node, ...props }) => <em className="italic" {...props} />,
+                          ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-2" {...props} />,
+                          ol: ({ node, ...props }) => <ol className="list-decimal pl-5 mb-2" {...props} />,
+                          li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                          h1: ({ node, ...props }) => <h1 className="text-xl font-bold mb-2" {...props} />,
+                          h2: ({ node, ...props }) => <h2 className="text-lg font-bold mb-2" {...props} />,
+                          h3: ({ node, ...props }) => <h3 className="text-md font-bold mb-2" {...props} />,
+                          a: ({ node, ...props }) => (
+                            <a
+                              className="text-blue-600 hover:underline"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              {...props}
+                            />
+                          ),
+                          code: ({ node, inline, ...props }) =>
+                            inline ? (
+                              <code className="bg-gray-100 px-1 py-0.5 rounded text-sm" {...props} />
+                            ) : (
+                              <code className="block bg-gray-100 p-2 rounded text-sm overflow-x-auto my-2" {...props} />
+                            ),
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                    </div>
+                  )}
                   <div
                     className={`text-right text-xs mt-1 ${
                       message.role === "user" ? "text-green-100" : message.isError ? "text-red-400" : "text-gray-400"
@@ -414,4 +444,3 @@ export default function ChatBot() {
     </div>
   )
 }
-

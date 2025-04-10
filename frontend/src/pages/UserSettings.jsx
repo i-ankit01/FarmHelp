@@ -24,7 +24,7 @@ export default function UserSettings() {
   const [userData, setUserData] = useState({
     name: "Ankit Kumar",
     contactNo: "9876543210",
-    email: "ankit.kumar@example.com",
+    email: "ankitdemo@gmail.com",
     cultivableLand: 45,
     cropsGrown: ["Wheat", "Rice", "Corn"],
   })

@@ -10,6 +10,7 @@
     "frontend": "cd frontend && npm run dev"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "@tailwindcss/vite": "^4.0.14",
     "axios": "^1.8.3",
     "bcryptjs": "^3.0.2",

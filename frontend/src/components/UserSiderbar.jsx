@@ -13,7 +13,7 @@ const UserSidebar = () => {
     { name: "Orders", icon: ShoppingBag, path: "/orders/user" },
     { name: "Settings", icon: User, path: "/settings/user" },
     { name: "Help", icon: HelpCircle, path: "/help/user" },
-    { name: "Farm Help AI", icon: MessageCircle, path: "/chatbot" },
+    { name: "Farm Help AI", icon: MessageCircle, path: "/farm-ai" },
   ];
 
   return (
