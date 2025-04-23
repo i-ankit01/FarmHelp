@@ -5,20 +5,15 @@ import ReactMarkdown from "react-markdown"
 import {
   Bell,
   ChevronDown,
-  Home,
   Leaf,
   Menu,
-  MessageCircle,
-  Package,
   RefreshCw,
   Search,
   Send,
-  Settings,
   User,
-  Users,
-  Trash2,
-  HelpCircle,
+  Bot
 } from "lucide-react"
+import UserSidebar from "../components/UserSiderbar"
 
 export default function ChatBot() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -33,8 +28,6 @@ export default function ChatBot() {
   ])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [chatHistory, setChatHistory] = useState([])
-  const [activeChatId, setActiveChatId] = useState(null)
 
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
@@ -98,40 +91,38 @@ export default function ChatBot() {
         content: userMessage.content,
       })
 
-      // Make API request to DeepSeek
       const response = await fetch("http://localhost:3000/api/gemini/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          prompt: userMessage.content, // sending prompt as required by your backend
+          prompt: userMessage.content,
         }),
       });
-    
+
       console.log("sent: " + userMessage.content);
-    
+
       if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
+        throw new Error(`API request failed ${response.status}`);
       }
-    
+
       const data = await response.json();
       console.log(data);
-    
-      // Add assistant response to chat
+
       const assistantResponse = {
         id: Date.now() + 1,
         role: "assistant",
         content: data.response || "Sorry, I couldn't process your request.",
         timestamp: new Date().toISOString(),
       };
-    
+
       setMessages((prev) => [...prev, assistantResponse]);
     } catch (err) {
       console.error("Error fetching response:", err);
       setError("Failed to get response. Please try again.");
-    
-      // Add error message to chat
+
+
       setMessages((prev) => [
         ...prev,
         {
@@ -149,7 +140,6 @@ export default function ChatBot() {
     }
   }
 
-  // Start new chat
   const startNewChat = () => {
     setMessages([
       {
@@ -220,90 +210,16 @@ export default function ChatBot() {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white border-r shadow-sm transition-transform duration-300 ease-in-out md:translate-x-0 md:static md:z-auto md:w-64 overflow-y-auto ${
-            sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex h-16 items-center border-b px-6">
-            <h2 className="text-lg font-semibold">Ask Your Doubts</h2>
-          </div>
-          <nav className="space-y-1 p-4">
-            <a href="/dashboard/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-              <Home className="h-5 w-5" />
-              <span>Dashboard</span>
-            </a>
-            {userData.type === "farmer" ? (
-              <a href="/orders/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-                <Package className="h-5 w-5" />
-                <span>Orders</span>
-              </a>
-            ) : (
-              <a href="#" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-                <Users className="h-5 w-5" />
-                <span>Find Farmers</span>
-              </a>
-            )}
-            <a href="/settings/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-              <Settings className="h-5 w-5" />
-              <span>Settings</span>
-            </a>
-            <a href="/help/user" className="flex items-center gap-3 rounded-md px-3 py-2 text-gray-700 hover:bg-gray-100">
-              <HelpCircle className="h-5 w-5" />
-              <span>Help</span>
-            </a>
-            <a href="/farm-ai" className="flex items-center gap-3 rounded-md bg-green-50 px-3 py-2 text-green-700 font-medium">
-              <MessageCircle className="h-5 w-5" />
-              <span>Farm Help AI</span>
-            </a>
-          </nav>
-
-          {/* Chat History */}
-          <div className="border-t p-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-medium text-gray-700">Chat History</h3>
-              <div className="flex gap-1">
-                <button onClick={startNewChat} className="p-1 rounded-md hover:bg-gray-100" title="New Chat">
-                  <MessageCircle className="h-4 w-4 text-gray-500" />
-                </button>
-                <button onClick={clearChatHistory} className="p-1 rounded-md hover:bg-gray-100" title="Clear History">
-                  <Trash2 className="h-4 w-4 text-gray-500" />
-                </button>
-              </div>
-            </div>
-
-            <div className="space-y-2 max-h-[calc(100vh-300px)] overflow-y-auto">
-              {chatHistory.map((chat) => (
-                <button
-                  key={chat.id}
-                  onClick={() => loadChat(chat.id)}
-                  className={`w-full text-left p-2 rounded-md text-sm transition-colors duration-200 ${
-                    activeChatId === chat.id ? "bg-green-100 text-green-800" : "hover:bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <MessageCircle className="h-4 w-4 flex-shrink-0" />
-                    <span className="truncate">{chat.title}</span>
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1 pl-6">{chat.date}</div>
-                </button>
-              ))}
-
-              {chatHistory.length === 0 && (
-                <div className="text-center py-4 text-sm text-gray-500">No chat history</div>
-              )}
-            </div>
-          </div>
-        </aside>
+        <UserSidebar/>
 
         {/* Main Chat Area */}
-        <main className="flex-1 flex flex-col bg-gray-50 relative">
+        <main className="flex-1 flex flex-col bg-gradient-to-br from-green-100 via-white to-blue-100 relative overflow-y-auto overflow-x-hidden ml-64">
           {/* Chat Header */}
           <div className="sticky top-0 z-10 border-b bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                  <MessageCircle className="h-5 w-5 text-green-600" />
+                  <Bot className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
                   <h2 className="text-sm font-medium">Farm Help AI</h2>
@@ -328,13 +244,12 @@ export default function ChatBot() {
                 className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fadeIn`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === "user"
+                  className={`max-w-[80%] rounded-lg p-3 ${message.role === "user"
                       ? "bg-green-600 text-white"
                       : message.isError
                         ? "bg-red-50 border border-red-200 text-red-800"
                         : "bg-white border shadow-sm"
-                  }`}
+                    }`}
                 >
                   {message.role === "user" ? (
                     <div className="whitespace-pre-wrap">{message.content}</div>
@@ -372,9 +287,8 @@ export default function ChatBot() {
                     </div>
                   )}
                   <div
-                    className={`text-right text-xs mt-1 ${
-                      message.role === "user" ? "text-green-100" : message.isError ? "text-red-400" : "text-gray-400"
-                    }`}
+                    className={`text-right text-xs mt-1 ${message.role === "user" ? "text-green-100" : message.isError ? "text-red-400" : "text-gray-400"
+                      }`}
                   >
                     {formatTimestamp(message.timestamp)}
                   </div>
