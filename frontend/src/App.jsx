@@ -20,6 +20,11 @@ import CompanyHelp from './pages/CompanyHelp';
 import CompanyOrder from './pages/CompanyOrder';
 import ChatBot from './pages/ChatBot';
 import NotFound from './pages/NotFound';
+// import NewUserDashboard from './pages/NewCompanyDashboard';
+// import NewLandingPage from './pages/NewLandingPage';
+import NewUserLogin from './pages/NewUserLogin';
+import NewUserSignup from './pages/NewUserSignup';
+import CropPrediction from './pages/CropPrediction';
 // import Demo from './pages/demo';
 
 function App() {
@@ -44,6 +49,9 @@ function App() {
           <Route path="/orders/company" element={<CompanyOrder/>} />
           <Route path="/farm-ai" element={<ChatBot/>} />
           <Route path="/notfound" element={<NotFound/>} />
+          <Route path="/demo" element={<NewUserLogin/>}/>
+          <Route path="/new" element={<NewUserSignup/>}/>
+          <Route path="/model-prediction" element={<CropPrediction/>}/>
         </Routes>
       </BrowserRouter>
     </>

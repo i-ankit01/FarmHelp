@@ -148,7 +148,7 @@ export default function UserSettings() {
         <UserSidebar/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 bg-[#F9FAFB]">
+        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden ml-64">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Account Settings</h1>
             <p className="text-gray-600">Update your profile information</p>

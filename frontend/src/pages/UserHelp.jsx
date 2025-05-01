@@ -172,7 +172,7 @@ export default function UserHelp() {
         <UserSidebar/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden ml-64">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Help Center</h1>
             <p className="text-gray-600">Find answers to frequently asked questions about using Farm Help</p>

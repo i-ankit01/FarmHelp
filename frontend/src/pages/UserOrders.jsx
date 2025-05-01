@@ -122,6 +122,7 @@ export default function UserOrders() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      
       {/* Header/Navbar */}
       <header className="sticky top-0 z-50 w-full border-b bg-white shadow-md">
         <div className="container flex h-16 items-center justify-between px-4">
@@ -165,7 +166,7 @@ export default function UserOrders() {
         <UserSidebar/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 bg-[#F9FAFB]">
+        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden ml-64">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Orders</h1>
             <p className="text-gray-600">Manage your pending and accepted orders</p>
@@ -265,7 +266,7 @@ export default function UserOrders() {
             <div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
                 {user?.farmer?.orders ?.filter(order => order.status === "Accepted")?.map((order, key) => (
-                  <div key={key} className="rounded-lg border bg-white p-6 shadow-md">
+                  <div key={key} className="rounded-lg border bg-white p-6 shadow-md hover:shadow-xl transition-all duration-300 animate-fade-in-up">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                       <div className="mb-4 lg:mb-0">
                         <div className="flex items-center gap-2">

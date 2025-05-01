@@ -170,7 +170,9 @@ export default function FindFarmers() {
               <Menu className="h-5 w-5" />
             </button>
             <Leaf className="h-6 w-6 text-green-600" />
-            <span className="text-xl font-bold">Farm Help</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
+              Farm Help
+            </span>
           </div>
 
           <div className="hidden md:flex flex-1 items-center justify-center px-6">
@@ -190,8 +192,8 @@ export default function FindFarmers() {
               <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center overflow-hidden">
-                <User className="h-5 w-5 text-green-600" />
+            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-300">
+                <User className="h-5 w-5 text-white" />
               </div>
               <span className="hidden md:inline-block text-sm font-medium">{company ? (
     <h1>{company?.company?.companyName}</h1>
@@ -208,7 +210,7 @@ export default function FindFarmers() {
         <CompanySidebar/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 ml-64">
+        <main className="flex-1 p-6 ml-64 bg-gradient-to-b from-blue-100/50 to-transparent">
           <div className="mb-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between">
               <div>
@@ -261,17 +263,17 @@ export default function FindFarmers() {
           ) : (
             <>
               {filteredFarmers.length > 0 ? (
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
                   {filteredFarmers.map((farmer) => (
-                    <div key={farmer.id} className="rounded-lg border bg-white shadow-sm overflow-hidden">
+                    <div key={farmer.id} className="rounded-lg border bg-white shadow-sm overflow-hidden hover:scale-102 hover:shadow-lg transition ">
                       <div className="border-b bg-gray-50 p-4">
                         <div className="flex justify-between items-start">
                           <div>
                             <h3 className="text-lg font-medium">{`${farmer.firstName} ${farmer.lastName}`}</h3>
                             <p className="text-sm text-gray-500">India</p>
                           </div>
-                          <div className="flex items-center bg-green-100 px-2 py-1 rounded-full">
-                            <span className="text-xs font-medium text-green-800">★ {farmer.rating}</span>
+                          <div className="flex items-center bg-blue-100 px-2 py-1 rounded-full">
+                            <span className="text-xs font-medium text-blue-800">★ {farmer.rating}</span>
                           </div>
                         </div>
                       </div>
@@ -336,7 +338,7 @@ export default function FindFarmers() {
                               />
                               <button
                                 onClick={() => handleSubmitRequest(farmer)}
-                                className="inline-flex items-center rounded-md cursor-pointer bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                className="inline-flex items-center rounded-md cursor-pointer bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-800  px-4 py-2 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                               >
                                 <Send className="mr-2 h-4 w-4" />
                                 Request

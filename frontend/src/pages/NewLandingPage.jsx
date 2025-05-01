@@ -21,9 +21,8 @@ import {
   Zap,
   User,
 } from "lucide-react"
-import farmerImage from '../assets/farmer.png'
 
-export default function LandingPage() {
+export default function NewLandingPage() {
   const [email, setEmail] = useState("")
   const [scrollY, setScrollY] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -57,7 +56,7 @@ export default function LandingPage() {
       </div>
 
       {/* Floating farm elements */}
-      {/* <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-10 animate-float animation-delay-1000">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center border-2 border-green-300">
             <Wheat className="h-8 w-8 text-green-600" />
@@ -78,7 +77,7 @@ export default function LandingPage() {
             <Carrot className="h-9 w-9 text-orange-600" />
           </div>
         </div>
-      </div> */}
+      </div>
 
       {/* Header/Navbar */}
       <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-lg">
@@ -88,7 +87,7 @@ export default function LandingPage() {
               <Leaf className="h-8 w-8 text-green-600 animate-pulse" />
               <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-green-500 animate-ping"></span>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 via-orange-500 to-green-400 bg-clip-text text-transparent">
               Farm Help
             </span>
           </div>
@@ -120,12 +119,12 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-4">
             <a href="/signin/user">
-              <button className="hidden sm:flex h-10 px-4 py-2 rounded-full cursor-pointer border border-green-300 bg-white text-sm font-medium shadow-sm transition-all duration-300 hover:shadow-lg hover:border-green-400 hover:scale-105">
+              <button className="hidden sm:flex h-10 px-4 py-2 rounded-full border border-green-300 bg-white text-sm font-medium shadow-sm transition-all duration-300 hover:shadow-lg hover:border-green-400 hover:scale-105">
                 Sign In
               </button>
             </a>
             <a href="/signup/user">
-              <button className="h-10 px-4 py-2 rounded-full bg-gradient-to-r from-green-600 to-green-400 cursor-pointer text-white text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 hover:from-green-500 hover:to-green-600">
+              <button className="h-10 px-4 py-2 rounded-full bg-gradient-to-r from-green-600 to-green-400 text-white text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 hover:from-green-500 hover:to-green-300">
                 Sign Up
               </button>
             </a>
@@ -141,12 +140,20 @@ export default function LandingPage() {
             <div className="absolute top-0 left-0 w-full h-full bg-[url('https://via.placeholder.com/1920x1080')] bg-cover bg-center opacity-10"></div>
           </div>
 
+          {/* Animated farm elements */}
+          <div className="absolute bottom-20 right-10 animate-float-slow animation-delay-1000">
+            <Wheat className="h-20 w-20 text-yellow-300" />
+          </div>
+          
+          <div className="absolute bottom-40 left-20 animate-float-slow animation-delay-3000">
+            <Cloud className="h-16 w-16 text-blue-300" />
+          </div>
 
           <div className="container px-4 md:px-5 relative z-10">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2 items-center">
               <div className="flex flex-col justify-center space-y-4 transform translate-y-0 opacity-100 transition-all duration-1000 ease-out">
                 <div className="inline-block">
-                  <span className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-green-100 to-green-200 text-green-800 text-sm font-medium shadow-inner">
+                  <span className="inline-block px-4 py-1 rounded-full bg-gradient-to-r from-green-100 to-green-200 text-green-800 text-sm font-medium shadow-inner animate-pulse">
                     Revolutionizing Agriculture
                   </span>
                 </div>
@@ -162,9 +169,9 @@ export default function LandingPage() {
                     <span className="absolute -left-2 top-0 w-1 h-full bg-green-400 rounded-full"></span>
                   </p>
                 </div>
-                <div className="flex sm:flex-row gap-3 mt-2">
+                <div className="flex flex-col sm:flex-row gap-3 mt-2">
                   <a href="/signin/user">
-                    <button className="inline-flex h-12 items-center justify-center cursor-pointer rounded-full bg-gradient-to-r from-green-600 to-green-400 px-8 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 hover:from-green-500 hover:to-green-300 group">
+                    <button className="inline-flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-green-600 to-green-400 px-8 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 hover:from-green-500 hover:to-green-300 group">
                       Get Started
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
@@ -197,9 +204,9 @@ export default function LandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-yellow-300 rounded-full blur-3xl opacity-20 animate-pulse"></div>
                 <div className="relative z-10 bg-white p-2 rounded-2xl shadow-2xl transform rotate-3 transition-all duration-500 hover:rotate-0 hover:scale-105">
                   <img
-                    src={farmerImage}
+                    src="https://via.placeholder.com/550x550"
                     alt="Farm Help Platform"
-                    className="rounded-xl object-cover w-50"
+                    className="rounded-xl object-cover"
                   />
 
                   {/* Decorative elements */}
@@ -212,7 +219,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Floating badges */}
-                <div className="absolute md:-top-10 md:-right-10 -top-20 -right-1 bg-white rounded-lg px-3 py-2 shadow-lg animate-float animation-delay-1500">
+                <div className="absolute -top-10 -right-10 bg-white rounded-lg px-3 py-2 shadow-lg animate-float animation-delay-1500">
                   <div className="flex items-center gap-2">
                     <Shield className="h-5 w-5 text-green-500" />
                     <span className="text-sm font-medium">Verified Farmers</span>
@@ -724,7 +731,7 @@ export default function LandingPage() {
                   />
                   <button
                     type="submit"
-                    className="inline-flex h-12 w-64 items-center justify-center rounded-full bg-white px-4 py-2 text-sm font-medium text-green-600 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-green-50 hover:scale-105 group"
+                    className="inline-flex h-12 items-center justify-center rounded-full bg-white px-6 py-2 text-sm font-medium text-green-600 shadow-lg transition-all duration-300 hover:shadow-xl hover:bg-green-50 hover:scale-105 group"
                   >
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

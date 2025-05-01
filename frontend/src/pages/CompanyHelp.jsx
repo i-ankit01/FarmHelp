@@ -22,11 +22,7 @@ export default function CompanyHelp() {
   const [activeTab, setActiveTab] = useState("farmer") // "farmer" or "company"
   const [openFaqs, setOpenFaqs] = useState({})
 
-  // Sample user data
-  const userData = {
-    name: "Ankit Kumar",
-    type: "farmer", // or "company"
-  }
+
 
   // Toggle FAQ item
   const toggleFaq = (id) => {
@@ -138,7 +134,9 @@ export default function CompanyHelp() {
               <Menu className="h-5 w-5" />
             </button>
             <Leaf className="h-6 w-6 text-green-600" />
-            <span className="text-xl font-bold">Farm Help</span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
+              Farm Help
+            </span>
           </div>
 
           <div className="hidden md:flex flex-1 items-center justify-center px-6">
@@ -158,10 +156,10 @@ export default function CompanyHelp() {
               <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                <User className="h-5 w-5 text-gray-600" />
+            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-300">
+                <User className="h-5 w-5 text-white" />
               </div>
-              <span className="hidden md:inline-block text-sm font-medium">{userData.name}</span>
+              <span className="hidden md:inline-block text-sm font-medium">Company Help</span>
               <ChevronDown className="h-4 w-4 text-gray-500" />
             </div>
           </div>
@@ -176,7 +174,7 @@ export default function CompanyHelp() {
         />
 
         {/* Main Content */}
-        <main className="flex-1 p-6 ml-64">
+        <main className="flex-1 p-6 ml-64 bg-gradient-to-b from-blue-100/50 to-transparent">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Help Center</h1>
             <p className="text-gray-600">Find answers to frequently asked questions about using Farm Help</p>
