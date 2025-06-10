@@ -1,5 +1,6 @@
 import React from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
+
 import "remixicon/fonts/remixicon.css";
 import { Link } from "react-router-dom";
 import { ButtonLink } from "../components/ButtonLink";

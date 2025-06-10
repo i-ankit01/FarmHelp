@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
 import "remixicon/fonts/remixicon.css";
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";

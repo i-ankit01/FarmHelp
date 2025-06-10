@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../components/header";
+import Header from "../components/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonLink } from "../components/ButtonLink";
 
