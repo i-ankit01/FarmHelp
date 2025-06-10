@@ -7,6 +7,7 @@ import { ButtonLink } from "../components/ButtonLink";
 import axios from "axios";
 
 export function CompanyLogin({ className, ...props }) {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -17,7 +18,7 @@ export function CompanyLogin({ className, ...props }) {
     setError(null);
     
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/company/login", {
+      const response = await axios.post(`${backendUrl}/api/v1/company/login`, {
         email,
         password,
       }, { withCredentials: true });

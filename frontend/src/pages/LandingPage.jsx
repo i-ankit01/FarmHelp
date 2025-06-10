@@ -55,38 +55,14 @@ export default function LandingPage() {
         <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
         <div className="absolute -bottom-20 right-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-3000"></div>
       </div>
-
-      {/* Floating farm elements */}
-      {/* <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-10 animate-float animation-delay-1000">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center border-2 border-green-300">
-            <Wheat className="h-8 w-8 text-green-600" />
-          </div>
-        </div>
-        <div className="absolute top-1/3 right-20 animate-float animation-delay-2000">
-          <div className="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center border-2 border-yellow-300">
-            <Tractor className="h-10 w-10 text-yellow-600" />
-          </div>
-        </div>
-        <div className="absolute top-[50%] left-10 animate-float animation-delay-4000">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center border-2 border-red-300">
-            <Apple className="h-8 w-8 text-red-600" />
-          </div>
-        </div>
-        <div className="absolute bottom-1/3 right-10 animate-float animation-delay-5000">
-          <div className="w-18 h-18 bg-orange-100 rounded-full flex items-center justify-center border-2 border-orange-300">
-            <Carrot className="h-9 w-9 text-orange-600" />
-          </div>
-        </div>
-      </div> */}
-
+      
       {/* Header/Navbar */}
       <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-lg">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="relative">
-              <Leaf className="h-8 w-8 text-green-600 animate-pulse" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-green-500 animate-ping"></span>
+              {/* <Leaf className="h-8 w-8 text-green-600 animate-pulse" /> */}
+              {/* <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-green-500 animate-ping"></span> */}
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
               Farm Help

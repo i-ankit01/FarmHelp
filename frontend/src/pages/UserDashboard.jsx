@@ -21,6 +21,7 @@ import Footer from "../components/Footer";
 import UserSiderbar from "../components/UserSiderbar";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserData } from "../store/userSlice";
+import VoiceChatbot from "./VoiceChatbot";
 
 export default function UserDashboard() {
   const dispatch = useDispatch();
@@ -229,14 +230,14 @@ export default function UserDashboard() {
               </p>
               <div className="mt-2 flex items-center gap-4">
                 <div className="flex items-center gap-1">
-                  <span className="h-3 w-3 rounded-full bg-yellow-400 animate-pulse"></span>
+                  <span className="h-3 w-3 rounded-full bg-yellow-400 "></span>
                   <span className="text-sm text-gray-600">{status === "loading"
                       ? "Loading..."
                       : user?.farmer?.orders ?.filter(order => order.status === "Pending")?.length}{" "}
                     Pending</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <span className="h-3 w-3 rounded-full bg-green-400 animate-pulse"></span>
+                  <span className="h-3 w-3 rounded-full bg-green-400"></span>
                   <span className="text-sm text-gray-600">{status === "loading"
                       ? "Loading..."
                       : user?.farmer?.orders ?.filter(order => order.status === "Accepted")?.length}{" "} Completed</span>
@@ -323,6 +324,7 @@ export default function UserDashboard() {
           </div>
         </main>
       </div>
+      <VoiceChatbot/>
       <Footer />
     </div>
   );

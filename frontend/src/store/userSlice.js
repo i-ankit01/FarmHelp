@@ -5,11 +5,12 @@ import { jwtDecode } from "jwt-decode";
 export const fetchUserData = createAsyncThunk("user/fetchUserData", async () => {
     const token = localStorage.getItem("token");
     if (!token) throw new Error("No token found");
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.id;
 
-    const response = await fetch(`http://localhost:3000/api/v1/farmer/${userId}`, {
+    const response = await fetch(`${backendUrl}/api/v1/farmer/${userId}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${token}`,
@@ -27,7 +28,7 @@ export const fetchUserData = createAsyncThunk("user/fetchUserData", async () => 
 
 // Fetch all farmers
 export const fetchFarmers = createAsyncThunk("user/fetchFarmers", async () => {
-    const response = await fetch("http://localhost:3000/api/v1/farmers", {
+    const response = await fetch(`${backendUrl}/api/v1/farmers`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

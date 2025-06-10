@@ -182,4 +182,223 @@
     border-top-color: white;
     animation: spin 0.8s linear infinite;
   }
+
+.voice-chatbot-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
   
+  .chatbot-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #16a34a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .chatbot-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .chatbot-button.open {
+    background-color: #15803d;
+  }
+  
+  .chatbot-button.listening {
+    background-color: #ef4444;
+  }
+  
+  .chatbot-button.replying {
+    background-color: #3b82f6;
+  }
+  
+  .robot-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+  
+  .chatbot-panel {
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    width: 320px;
+    height: 400px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideIn 0.3s ease;
+  }
+
+  .chatbot-header {
+    padding: 1rem;
+    background-color: #16a34a;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chatbot-header h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .chatbot-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .welcome-message {
+    text-align: center;
+    color: #666;
+    margin: auto 0;
+  }
+  
+  .welcome-message .hint {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+  }
+  
+  .message {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    max-width: 80%;
+    word-break: break-word;
+  }
+  
+  .message.user {
+    background-color: #e9f5ff;
+    color: #333;
+    align-self: flex-end;
+    border-bottom-right-radius: 0.25rem;
+  }
+  
+  .message.bot {
+    background-color: #f0fdf4;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 0.25rem;
+  }
+  
+  .chatbot-footer {
+    padding: 1rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .chatbot-status {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+  }
+  
+  /* Listening animation */
+  .listening-animation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+  
+  .listening-animation span {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  
+  .listening-animation span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .listening-animation span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+   .replying-animation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dot-flashing {
+    position: relative;
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+    background-color: white;
+    color: white;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+  }
+  
+  .dot-flashing::before,
+  .dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+  }
+  
+  .dot-flashing::before {
+    left: -10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+    background-color: white;
+    color: white;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+  }
+  
+  .dot-flashing::after {
+    left: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+    background-color: white;
+    color: white;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+  }

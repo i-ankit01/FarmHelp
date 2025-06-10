@@ -27,6 +27,7 @@ export default function FindFarmers() {
     const [isLoading, setIsLoading] = useState(false);
     const [priceOffers, setPriceOffers] = useState({});
     const [demandWeights, setDemandWeights] = useState({});
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const dispatch = useDispatch();
     
@@ -35,8 +36,7 @@ export default function FindFarmers() {
     
     // 🔹 Fetch Company data from Redux store
     const { company, loading, error } = useSelector((state) => state.company || { company: null, loading: false, error: null });
-    // console.log(company?.company?.companyName)
-    // 🔹 useEffect Hooks - Always at the top level (before any conditions)
+
     useEffect(() => {
         dispatch(fetchFarmers());
     }, [dispatch]);
@@ -45,7 +45,7 @@ export default function FindFarmers() {
         dispatch(fetchCompanyData());
     }, [dispatch]);
 
-    // 🔹 Handle Loading/Error States - Using Conditional Rendering (Not Early Return)
+
     let content;
     if (loading) {
         content = <p>Loading company data...</p>;
@@ -95,7 +95,7 @@ export default function FindFarmers() {
   const submitRequest = async (farmerId, farmerName, crop, price, weight) => {
     console.log(farmerId, farmerName, crop, price, weight)
     try {
-      const response = await fetch('http://localhost:3000/api/v1/orders', {
+      const response = await fetch(`${backendUrl}/api/v1/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -314,7 +314,7 @@ export default function FindFarmers() {
                               placeholder="Enter quantity"
                               value={demandWeights[farmer.id] || ""}
                               onChange={(e) => handleWeightChange(farmer.id, e.target.value)}
-                              className="w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                              className="w-full rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                             />
                           </div>
 
@@ -334,7 +334,7 @@ export default function FindFarmers() {
                                 placeholder="Enter price"
                                 value={priceOffers[farmer.id] || ""}
                                 onChange={(e) => handlePriceChange(farmer.id, e.target.value)}
-                                className="flex-1 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+                                className="flex-1 rounded-md border border-gray-300 bg-white py-2 px-3 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                               />
                               <button
                                 onClick={() => handleSubmitRequest(farmer)}

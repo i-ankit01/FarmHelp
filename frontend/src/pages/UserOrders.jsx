@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUserData } from "../store/userSlice";
 
 export default function UserOrders() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const dispatch = useDispatch();
       const { user, status } = useSelector((state) => state.user);
     
@@ -17,88 +18,13 @@ export default function UserOrders() {
         }
       }, [dispatch, user]);
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState("pending") // "pending" or "accepted"
-
-
-
-
-  const pendingOrders = [
-    {
-      id: "PO-1001",
-      companyName: "Green Harvest Foods Ltd.",
-      location: "Mumbai, India",
-      crop: "Wheat",
-      requestedWeight: 250,
-      offeredAmount: 55000,
-      date: "2023-03-15",
-    },
-    {
-      id: "PO-1002",
-      companyName: "Organic Essentials Co.",
-      location: "Delhi, India",
-      crop: "Rice",
-      requestedWeight: 300,
-      offeredAmount: 78000,
-      date: "2023-03-14",
-    },
-    {
-      id: "PO-1003",
-      companyName: "Nature's Basket",
-      location: "Bangalore, India",
-      crop: "Potato",
-      requestedWeight: 180,
-      offeredAmount: 32400,
-      date: "2023-03-12",
-    },
-    {
-      id: "PO-1004",
-      companyName: "Farm Fresh Exports",
-      location: "Chennai, India",
-      crop: "Maize",
-      requestedWeight: 400,
-      offeredAmount: 88000,
-      date: "2023-03-10",
-    },
-  ]
-
-  const acceptedOrders = [
-    {
-      id: "AO-2001",
-      companyName: "Sunrise Agro Products",
-      location: "Pune, India",
-      crop: "Wheat",
-      requestedWeight: 200,
-      amount: 44000,
-      date: "2023-03-05",
-      paymentStatus: "Accepted",
-    },
-    {
-      id: "AO-2002",
-      companyName: "Golden Grain Mills",
-      location: "Hyderabad, India",
-      crop: "Rice",
-      requestedWeight: 350,
-      amount: 91000,
-      date: "2023-03-01",
-      paymentStatus: "Pending",
-    },
-    {
-      id: "AO-2003",
-      companyName: "Harvest Moon Foods",
-      location: "Kolkata, India",
-      crop: "Sugarcane",
-      requestedWeight: 500,
-      amount: 175000,
-      date: "2023-02-25",
-      paymentStatus: "Accepted",
-    },
-  ]
+  const [activeTab, setActiveTab] = useState("pending")
 
   // Handle order acceptance
   const handleAcceptOrder = async (farmerId, companyId, uniqueKey) => {
     console.log(farmerId, companyId, uniqueKey)
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/accept-order/${farmerId}/${companyId}/${uniqueKey}`, {
+      const response = await fetch(`${backendUrl}/api/v1/accept-order/${farmerId}/${companyId}/${uniqueKey}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

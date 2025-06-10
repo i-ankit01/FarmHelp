@@ -16,6 +16,7 @@ import {
 import UserSidebar from "../components/UserSiderbar"
 
 export default function ChatBot() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState([
@@ -91,7 +92,7 @@ export default function ChatBot() {
         content: userMessage.content,
       })
 
-      const response = await fetch("http://localhost:3000/api/gemini/generate", {
+      const response = await fetch(`${backendUrl}/api/gemini/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

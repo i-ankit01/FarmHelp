@@ -3,13 +3,14 @@ import {jwtDecode} from "jwt-decode"; // ✅ Fix import
 
 // 🔹 Async thunk to fetch logged-in company data
 export const fetchCompanyData = createAsyncThunk("company/fetchCompanyData", async () => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const company_token = localStorage.getItem("company_token");
     if (!company_token) throw new Error("No company_token found");
 
     const decodedToken = jwtDecode(company_token); // ✅ Fix variable name
     const companyId = decodedToken.id; // Get the company ID from company_token
 
-    const response = await fetch(`http://localhost:3000/api/v1/company/${companyId}`, {
+    const response = await fetch(`${backendUrl}/api/v1/company/${companyId}`, {
         method: "GET",
         headers: {
             Authorization: `Bearer ${company_token}`,

@@ -18,6 +18,7 @@ export function UserSignup({ className, ...props }) {
   });
 
   const [error, setError] = useState("");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Handle Input Changes
   const handleChange = (e) => {
@@ -45,7 +46,7 @@ export function UserSignup({ className, ...props }) {
     }
   
     try {
-      const response = await fetch("http://localhost:3000/api/v1/farmer/register", {
+      const response = await fetch(`${backendUrl}/api/v1/farmer/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
