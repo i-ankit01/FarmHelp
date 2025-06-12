@@ -22,10 +22,13 @@ import UserSiderbar from "../components/UserSiderbar";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserData } from "../store/userSlice";
 import VoiceChatbot from "./VoiceChatbot";
+import logo from "../assets//1749736593810.png"
 
 export default function UserDashboard() {
   const dispatch = useDispatch();
   const { user, status } = useSelector((state) => state.user);
+
+   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -33,7 +36,6 @@ export default function UserDashboard() {
       dispatch(fetchUserData());
     }
   }, [dispatch, user]);
-
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -62,7 +64,6 @@ export default function UserDashboard() {
         </div>
       </div>
 
-
       {/* Header/Navbar */}
       <header className="sticky top-0 z-50 w-full border-b bg-white shadow-md">
         <div className="container flex h-16 items-center justify-between px-4">
@@ -74,10 +75,11 @@ export default function UserDashboard() {
               <Menu className="h-5 w-5" />
             </button>
             <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
-              Farm Help
-            </span>
-          </div>
+              <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
+              <span className="md:text-2xl text-xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
+                Farm Help
+              </span>
+            </div>
           </div>
 
           <div className="hidden md:flex flex-1 items-center justify-center px-6">
@@ -97,7 +99,7 @@ export default function UserDashboard() {
               <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
             </button>
             <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-300">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center overflow-hidden shadow-sm group-hover:shadow-md transition-all duration-300">
                 <User className="h-5 w-5 text-white" />
               </div>
               <span className="hidden md:inline-block text-sm font-medium">
@@ -111,20 +113,22 @@ export default function UserDashboard() {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <UserSiderbar />
+        <UserSiderbar sidebarOpen={sidebarOpen} />
 
         {/* Main Content */}
         <main className="flex-1 p-6 overflow-auto bg-transparent overflow-y-auto overflow-x-hidden md:ml-64">
           <div className="mb-6 animate-fadeIn">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-green-700 to-green-500 bg-clip-text text-transparent">
-            Welcome,{" "}
+              Welcome,{" "}
               {status === "loading"
                 ? "Loading..."
                 : user?.farmer
                 ? `${user.farmer.firstName} ${user.farmer.lastName}`
                 : "User not found"}
             </h1>
-            <p className="text-gray-600">Here's an overview of your farm's performance</p>
+            <p className="text-gray-600">
+              Here's an overview of your farm's performance
+            </p>
           </div>
 
           {/* Dashboard Cards */}
@@ -142,9 +146,12 @@ export default function UserDashboard() {
                   </div>
                 </div>
                 <p className="mt-2 text-3xl font-bold bg-gradient-to-r from-green-700 to-green-500 bg-clip-text text-transparent group-hover:scale-105 origin-left transition-transform duration-200">
-                {status === "loading" ? "Loading..." : user?.farmer.land} Acres
+                  {status === "loading" ? "Loading..." : user?.farmer.land}{" "}
+                  Acres
                 </p>
-                <p className="mt-1 text-sm text-gray-500">Total farmland available</p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Total farmland available
+                </p>
               </div>
             </div>
 
@@ -161,11 +168,13 @@ export default function UserDashboard() {
                   </div>
                 </div>
                 <p className="mt-2 text-3xl font-bold bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent group-hover:scale-105 origin-left transition-transform duration-200">
-                {status === "loading"
-                  ? "Loading..."
-                  : user?.farmer.orders.length}
+                  {status === "loading"
+                    ? "Loading..."
+                    : user?.farmer.orders.length}
                 </p>
-                <p className="mt-1 text-sm text-gray-500">Business partnerships</p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Business partnerships
+                </p>
               </div>
             </div>
 
@@ -182,9 +191,11 @@ export default function UserDashboard() {
                   </div>
                 </div>
                 <p className="mt-2 text-3xl font-bold bg-gradient-to-r from-purple-700 to-purple-500 bg-clip-text text-transparent group-hover:scale-105 origin-left transition-transform duration-200">
-                ₹1,45,000
+                  ₹1,45,000
                 </p>
-                <p className="mt-1 text-sm text-gray-500">Available for withdrawal</p>
+                <p className="mt-1 text-sm text-gray-500">
+                  Available for withdrawal
+                </p>
               </div>
             </div>
 
@@ -199,7 +210,7 @@ export default function UserDashboard() {
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-              {status === "loading"
+                {status === "loading"
                   ? "Loading..."
                   : user?.farmer?.crops?.map((crop, index) => (
                       <span
@@ -224,23 +235,32 @@ export default function UserDashboard() {
                 </div>
               </div>
               <p className="mt-2 text-3xl font-bold bg-gradient-to-r from-amber-700 to-amber-500 bg-clip-text text-transparent group-hover:scale-105 origin-left transition-transform duration-200">
-              {status === "loading"
+                {status === "loading"
                   ? "Loading..."
                   : user?.farmer.orders.length}
               </p>
               <div className="mt-2 flex items-center gap-4">
                 <div className="flex items-center gap-1">
                   <span className="h-3 w-3 rounded-full bg-yellow-400 "></span>
-                  <span className="text-sm text-gray-600">{status === "loading"
+                  <span className="text-sm text-gray-600">
+                    {status === "loading"
                       ? "Loading..."
-                      : user?.farmer?.orders ?.filter(order => order.status === "Pending")?.length}{" "}
-                    Pending</span>
+                      : user?.farmer?.orders?.filter(
+                          (order) => order.status === "Pending"
+                        )?.length}{" "}
+                    Pending
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="h-3 w-3 rounded-full bg-green-400"></span>
-                  <span className="text-sm text-gray-600">{status === "loading"
+                  <span className="text-sm text-gray-600">
+                    {status === "loading"
                       ? "Loading..."
-                      : user?.farmer?.orders ?.filter(order => order.status === "Accepted")?.length}{" "} Completed</span>
+                      : user?.farmer?.orders?.filter(
+                          (order) => order.status === "Accepted"
+                        )?.length}{" "}
+                    Completed
+                  </span>
                 </div>
               </div>
             </div>
@@ -263,7 +283,9 @@ export default function UserDashboard() {
                     </div>
                     <div>
                       <p className="font-medium">New order received</p>
-                      <p className="text-sm text-gray-500">Order #12345 from Organic Foods Ltd.</p>
+                      <p className="text-sm text-gray-500">
+                        Order #12345 from Organic Foods Ltd.
+                      </p>
                       <p className="mt-1 text-xs text-gray-400">2 hours ago</p>
                     </div>
                   </div>
@@ -274,7 +296,9 @@ export default function UserDashboard() {
                     </div>
                     <div>
                       <p className="font-medium">New company connection</p>
-                      <p className="text-sm text-gray-500">Farm Fresh Inc. wants to connect with you</p>
+                      <p className="text-sm text-gray-500">
+                        Farm Fresh Inc. wants to connect with you
+                      </p>
                       <p className="mt-1 text-xs text-gray-400">Yesterday</p>
                     </div>
                   </div>
@@ -285,7 +309,9 @@ export default function UserDashboard() {
                     </div>
                     <div>
                       <p className="font-medium">Payment received</p>
-                      <p className="text-sm text-gray-500">₹35,000 from Green Grocers</p>
+                      <p className="text-sm text-gray-500">
+                        ₹35,000 from Green Grocers
+                      </p>
                       <p className="mt-1 text-xs text-gray-400">2 days ago</p>
                     </div>
                   </div>
@@ -298,7 +324,13 @@ export default function UserDashboard() {
           <div className="mt-8 animate-fadeIn animation-delay-700">
             <div className="rounded-xl border bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white shadow-md overflow-hidden relative">
               <div className="absolute top-0 right-0 opacity-20">
-                <svg width="150" height="150" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  width="150"
+                  height="150"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M12 3V5M5.6 5.6L7 7M3 12H5M5.6 18.4L7 17M12 19V21M17 17L18.4 18.4M19 12H21M18.4 5.6L17 7M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"
                     stroke="white"
@@ -312,7 +344,9 @@ export default function UserDashboard() {
                 <div>
                   <h3 className="text-lg font-medium">Today's Weather</h3>
                   <p className="text-3xl font-bold mt-2">32°C</p>
-                  <p className="text-sm opacity-80">Sunny with occasional clouds</p>
+                  <p className="text-sm opacity-80">
+                    Sunny with occasional clouds
+                  </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm">Perfect for harvesting</p>
@@ -324,7 +358,7 @@ export default function UserDashboard() {
           </div>
         </main>
       </div>
-      <VoiceChatbot/>
+      <VoiceChatbot />
       <Footer />
     </div>
   );

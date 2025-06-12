@@ -5,7 +5,6 @@ import ReactMarkdown from "react-markdown"
 import {
   Bell,
   ChevronDown,
-  Leaf,
   Menu,
   RefreshCw,
   Search,
@@ -14,6 +13,8 @@ import {
   Bot
 } from "lucide-react"
 import UserSidebar from "../components/UserSiderbar"
+import logo from "../assets//1749736593810.png"
+
 
 export default function ChatBot() {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -178,7 +179,7 @@ export default function ChatBot() {
             <button className="md:hidden p-2 rounded-md hover:bg-gray-100" onClick={() => setSidebarOpen(!sidebarOpen)}>
               <Menu className="h-5 w-5" />
             </button>
-            <Leaf className="h-6 w-6 text-green-600" />
+            <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             <span className="text-xl font-bold">Farm Help</span>
           </div>
 
@@ -211,10 +212,10 @@ export default function ChatBot() {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <UserSidebar/>
+        <UserSidebar sidebarOpen={sidebarOpen}/>
 
         {/* Main Chat Area */}
-        <main className="flex-1 flex flex-col bg-gradient-to-br from-green-100 via-white to-blue-100 relative overflow-y-auto overflow-x-hidden ml-64">
+        <main className="flex-1 flex flex-col bg-gradient-to-br from-green-100 via-white to-blue-100 relative overflow-y-auto overflow-x-hidden md:ml-64">
           {/* Chat Header */}
           <div className="sticky top-0 z-10 border-b bg-white p-4 shadow-sm">
             <div className="flex items-center justify-between">

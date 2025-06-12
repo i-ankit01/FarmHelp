@@ -6,9 +6,24 @@ const cors = require("cors");
 
 const app = express();
 
+// app.use(cors({
+//   origin: "http://localhost:5173", 
+//   credentials: true,  
+// }));
+const allowedOrigins = [
+  "http://localhost:5173",           
+  "https://farm-help-eight.vercel.app"  
+];
+
 app.use(cors({
-  origin: "http://localhost:5173", // Allow requests from your frontend
-  credentials: true,  // Allow cookies (if using authentication)
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
 
 const cookieParser = require("cookie-parser");

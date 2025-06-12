@@ -4,30 +4,25 @@ import { useState } from "react"
 import {
   Bell,
   ChevronDown,
-  HelpCircle,
-  Home,
-  Leaf,
   Menu,
   Search,
-  Settings,
-  ShoppingBag,
   User,
-  Users,
 } from "lucide-react"
 import UserSidebar from "../components/UserSiderbar"
+import logo from "../assets//1749736593810.png"
+
 
 export default function UserHelp() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState("farmer") // "farmer" or "company"
+  const [activeTab, setActiveTab] = useState("farmer")
   const [openFaqs, setOpenFaqs] = useState({})
 
   // Sample user data
   const userData = {
     name: "Ankit Kumar",
-    type: "farmer", // or "company"
+    type: "farmer", 
   }
 
-  // Toggle FAQ item
   const toggleFaq = (id) => {
     setOpenFaqs((prev) => ({
       ...prev,
@@ -136,7 +131,7 @@ export default function UserHelp() {
             <button className="md:hidden p-2 rounded-md hover:bg-gray-100" onClick={() => setSidebarOpen(!sidebarOpen)}>
               <Menu className="h-5 w-5" />
             </button>
-            <Leaf className="h-6 w-6 text-green-600" />
+            <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             <span className="text-xl font-bold">Farm Help</span>
           </div>
 
@@ -169,10 +164,10 @@ export default function UserHelp() {
 
       <div className="flex flex-1">
         
-        <UserSidebar/>
+        <UserSidebar sidebarOpen={sidebarOpen}/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden ml-64">
+        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden md:ml-64">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Help Center</h1>
             <p className="text-gray-600">Find answers to frequently asked questions about using Farm Help</p>

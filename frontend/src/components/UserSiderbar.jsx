@@ -3,9 +3,8 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Sprout, ShoppingCart, TrendingUp } from "lucide-react";
 
-const UserSidebar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation(); // Get current path
+const UserSidebar = ({sidebarOpen}) => {
+  const location = useLocation(); 
 
   // Sidebar navigation links
   const navItems = [

@@ -1,15 +1,15 @@
-import React from "react";
+
 import { Facebook, Instagram, Linkedin, Twitter, Leaf } from "lucide-react";
-import { Link } from "react-router-dom";
+import logo from "../assets//1749736593810.png"
 
 const Footer = ()=> {
     return (
         <footer className="bg-white border-t py-8 md:ml-64 z-50">
         <div className="container px-4">
-          <div className="grid gap-8 md:grid-cols-4">
+          <div className=" flex md:grid gap-8 md:grid-cols-4">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Leaf className="h-6 w-6 text-green-600" />
+                <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
                 <span className="text-xl font-bold">Farm Help</span>
               </div>
               <p className="text-sm text-gray-600 mb-4">
@@ -31,6 +31,7 @@ const Footer = ()=> {
               </div>
             </div>
             
+            <div>
             <div>
               <h3 className="font-semibold mb-4">Company</h3>
               <ul className="space-y-2 text-sm">
@@ -92,6 +93,7 @@ const Footer = ()=> {
                 <li className="text-gray-600">New Delhi, India 110001</li>
               </ul>
             </div>
+          </div>
           </div>
 
           <div className="mt-8 border-t pt-6 flex flex-col md:flex-row md:items-center md:justify-between">

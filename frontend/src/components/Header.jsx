@@ -1,5 +1,4 @@
-import React from "react";
-import { Leaf } from "lucide-react";
+import logo from "../assets//1749736593810.png";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -17,8 +16,11 @@ const Header = () => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo Section */}
         <div className="flex items-center gap-2 ml-10">
-          <Leaf className="h-6 w-6 text-green-600" />
-          <Link to={"/"} className="text-2xl font-bold">Farm Help</Link>
+          <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
+
+          <Link to={"/"} className="text-2xl font-bold">
+            Farm Help
+          </Link>
         </div>
 
         {/* Navigation */}

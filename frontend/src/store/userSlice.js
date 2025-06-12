@@ -6,6 +6,7 @@ export const fetchUserData = createAsyncThunk("user/fetchUserData", async () => 
     const token = localStorage.getItem("token");
     if (!token) throw new Error("No token found");
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log(backendUrl)
 
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.id;
@@ -28,6 +29,7 @@ export const fetchUserData = createAsyncThunk("user/fetchUserData", async () => 
 
 // Fetch all farmers
 export const fetchFarmers = createAsyncThunk("user/fetchFarmers", async () => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const response = await fetch(`${backendUrl}/api/v1/farmers`, {
         method: "GET",
         headers: {

@@ -9,9 +9,6 @@ import {
   Truck,
   Shield,
   Sun,
-  Cloud,
-  CloudRain,
-  Tractor,
   Wheat,
   Apple,
   Carrot,
@@ -22,6 +19,7 @@ import {
   User,
 } from "lucide-react"
 import farmerImage from '../assets/farmer.png'
+import logo from "../assets//1749736593810.png"
 
 export default function LandingPage() {
   const [email, setEmail] = useState("")
@@ -61,8 +59,7 @@ export default function LandingPage() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="relative">
-              {/* <Leaf className="h-8 w-8 text-green-600 animate-pulse" /> */}
-              {/* <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-green-500 animate-ping"></span> */}
+              <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
               Farm Help
@@ -96,12 +93,12 @@ export default function LandingPage() {
           </nav>
           <div className="flex items-center gap-4">
             <a href="/signin/user">
-              <button className="hidden sm:flex h-10 px-4 py-2 rounded-full cursor-pointer border border-green-300 bg-white text-sm font-medium shadow-sm transition-all duration-300 hover:shadow-lg hover:border-green-400 hover:scale-105">
+              <button className="sm:flex h-10 px-4 py-2 rounded-full cursor-pointer border border-green-300 bg-white text-sm font-medium shadow-sm transition-all duration-300 hover:shadow-lg hover:border-green-400 hover:scale-105">
                 Sign In
               </button>
             </a>
             <a href="/signup/user">
-              <button className="h-10 px-4 py-2 rounded-full bg-gradient-to-r from-green-600 to-green-400 cursor-pointer text-white text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 hover:from-green-500 hover:to-green-600">
+              <button className="hidden md:block h-10 px-4 py-2 rounded-full bg-gradient-to-r from-green-600 to-green-400 cursor-pointer text-white text-sm font-medium shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 hover:from-green-500 hover:to-green-600">
                 Sign Up
               </button>
             </a>
@@ -130,8 +127,8 @@ export default function LandingPage() {
                   <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-green-700 via-green-500 to-orange-500 animate-gradient">
                     Direct Farm to Business Connection
                   </h1>
-                  <p className="max-w-[600px] text-gray-700 md:text-xl relative">
-                    <span className="relative z-10">
+                  <p className="max-w-[600px] text-gray-700 md:text-xl relative ml-2 md:ml-0">
+                    <span className="relative z-10 ">
                       Eliminate middlemen and maximize your profits. Connect directly with businesses looking for your
                       crops.
                     </span>
@@ -170,7 +167,7 @@ export default function LandingPage() {
               </div>
 
               <div className="flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-yellow-300 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-300 to-yellow-300 rounded-full blur-3xl opacity-20 "></div>
                 <div className="relative z-10 bg-white p-2 rounded-2xl shadow-2xl transform rotate-3 transition-all duration-500 hover:rotate-0 hover:scale-105">
                   <img
                     src={farmerImage}
@@ -216,7 +213,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2 max-w-[800px]">
-                <div className="inline-block rounded-full bg-gradient-to-r from-green-100 to-green-200 px-4 py-1.5 text-sm font-medium text-green-800 shadow-inner animate-pulse">
+                <div className="inline-block rounded-full bg-gradient-to-r from-green-100 to-green-200 px-4 py-1.5 text-sm font-medium text-green-800 shadow-inner ">
                   Features
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-green-700 via-green-500 to-yellow-500 animate-gradient">
@@ -331,7 +328,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-full bg-gradient-to-r from-green-100 to-green-200 px-4 py-1.5 text-sm font-medium text-green-800 shadow-inner animate-pulse">
+                <div className="inline-block rounded-full bg-gradient-to-r from-green-100 to-green-200 px-4 py-1.5 text-sm font-medium text-green-800 shadow-inner ">
                   Process
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-green-700 via-green-500 to-yellow-500 animate-gradient">
@@ -351,7 +348,7 @@ export default function LandingPage() {
 
               {/* Step 1 */}
               <div className="relative flex flex-col items-center space-y-4 animate-fade-in-up">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white text-xl font-bold shadow-lg z-10 animate-pulse">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white text-xl font-bold shadow-lg z-10 ">
                   1
                 </div>
                 <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-700 to-green-500">
@@ -371,7 +368,7 @@ export default function LandingPage() {
 
               {/* Step 2 */}
               <div className="relative flex flex-col items-center space-y-4 animate-fade-in-up animation-delay-300">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xl font-bold shadow-lg z-10 animate-pulse animation-delay-300">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-xl font-bold shadow-lg z-10  animation-delay-300">
                   2
                 </div>
                 <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-700 to-yellow-500">
@@ -391,7 +388,7 @@ export default function LandingPage() {
 
               {/* Step 3 */}
               <div className="relative flex flex-col items-center space-y-4 animate-fade-in-up animation-delay-600">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xl font-bold shadow-lg z-10 animate-pulse animation-delay-600">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xl font-bold shadow-lg z-10  animation-delay-600">
                   3
                 </div>
                 <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-500">
@@ -419,7 +416,7 @@ export default function LandingPage() {
                 The Farm Help Ecosystem
               </h3>
 
-              <div className="grid grid-cols-2 gap-4 relative">
+              <div className=" flex flex-col md:grid grid-cols-2 gap-4 relative">
                 {/* Farmer side */}
                 <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
                   <div className="flex items-center gap-2 mb-3">
@@ -503,7 +500,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-full bg-gradient-to-r from-blue-100 to-blue-200 px-4 py-1.5 text-sm font-medium text-blue-800 shadow-inner animate-pulse">
+                <div className="inline-block rounded-full bg-gradient-to-r from-blue-100 to-blue-200 px-4 py-1.5 text-sm font-medium text-blue-800 shadow-inner ">
                   Testimonials
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-green-500 animate-gradient">
@@ -665,7 +662,7 @@ export default function LandingPage() {
           <div className="container px-4 md:px-6 relative z-10">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-white animate-pulse">
+                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl text-white ">
                   Ready to Transform Your Business?
                 </h2>
                 <p className="max-w-[900px] text-green-50 md:text-xl">
@@ -756,7 +753,7 @@ export default function LandingPage() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <div className="inline-block rounded-full bg-gradient-to-r from-blue-100 to-blue-200 px-4 py-1.5 text-sm font-medium text-blue-800 shadow-inner animate-pulse">
+                  <div className="inline-block rounded-full bg-gradient-to-r from-blue-100 to-blue-200 px-4 py-1.5 text-sm font-medium text-blue-800 shadow-inner ">
                     Contact Us
                   </div>
                   <h2 className="text-3xl font-bold tracking-tighter md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-500 to-green-500 animate-gradient">
@@ -963,10 +960,9 @@ export default function LandingPage() {
         <div className="container flex flex-col items-center justify-between gap-4 px-4 md:flex-row md:px-6">
           <div className="flex items-center gap-2">
             <div className="relative">
-              <Leaf className="h-6 w-6 text-green-600" />
-              <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-green-500 animate-ping"></span>
+              <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
               Farm Help
             </span>
           </div>

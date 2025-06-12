@@ -6,6 +6,7 @@ import Footer from "../components/Footer"
 import UserSidebar from "../components/UserSiderbar"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserData } from "../store/userSlice";
+import logo from "../assets//1749736593810.png"
 
 
 export default function UserSettings() {
@@ -112,7 +113,7 @@ export default function UserSettings() {
             <button className="md:hidden p-2 rounded-md hover:bg-gray-100" onClick={() => setSidebarOpen(!sidebarOpen)}>
               <Menu className="h-5 w-5" />
             </button>
-            <Leaf className="h-6 w-6 text-green-600" />
+            <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             <span className="text-xl font-bold">Farm Help</span>
           </div>
 
@@ -145,10 +146,10 @@ export default function UserSettings() {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <UserSidebar/>
+        <UserSidebar sidebarOpen={sidebarOpen}/>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden ml-64">
+        <main className="flex-1 p-6 bg-gradient-to-br from-green-100 via-white to-blue-100 overflow-y-auto overflow-x-hidden md:ml-64">
           <div className="mb-6">
             <h1 className="text-2xl font-bold">Account Settings</h1>
             <p className="text-gray-600">Update your profile information</p>

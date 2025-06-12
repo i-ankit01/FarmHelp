@@ -23,6 +23,7 @@ import Footer from "../components/Footer";
 import CompanySidebar from "../components/CompanySidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFarmers } from "../store/userSlice";
+import logo from "../assets//1749736593810.png"
 import { Link } from "react-router-dom";
 import { fetchCompanyData } from "../store/companySlice";
 
@@ -90,7 +91,7 @@ let content;
             >
               <Menu className="h-5 w-5" />
             </button>
-            <Leaf className="h-6 w-6 text-green-600" />
+            <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
               Farm Help
             </span>

@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import CompanySidebar from "../components/CompanySidebar"
 import Footer from "../components/Footer"
+import logo from "../assets//1749736593810.png"
 
 export default function CompanyHelp() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -133,7 +134,7 @@ export default function CompanyHelp() {
             <button className="md:hidden p-2 rounded-md hover:bg-gray-100" onClick={() => setSidebarOpen(!sidebarOpen)}>
               <Menu className="h-5 w-5" />
             </button>
-            <Leaf className="h-6 w-6 text-green-600" />
+            <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
               Farm Help
             </span>

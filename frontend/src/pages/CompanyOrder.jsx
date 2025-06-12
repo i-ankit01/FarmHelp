@@ -22,6 +22,7 @@ import {
 import CompanySidebar from "../components/CompanySidebar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
+import logo from "../assets//1749736593810.png"
 import { fetchCompanyData } from "../store/companySlice";
 
 export default function CompanyOrder() {
@@ -98,7 +99,7 @@ export default function CompanyOrder() {
             >
               <Menu className="h-5 w-5" />
             </button>
-            <Leaf className="h-6 w-6 text-green-600" />
+            <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
             <span className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-400 bg-clip-text text-transparent">
               Farm Help
             </span>
