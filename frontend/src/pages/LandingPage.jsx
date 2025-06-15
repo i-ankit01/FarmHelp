@@ -20,11 +20,19 @@ import {
 } from "lucide-react"
 import farmerImage from '../assets/farmer.png'
 import logo from "../assets//1749736593810.png"
+import API_BASE_URL from "../config";
+
 
 export default function LandingPage() {
   const [email, setEmail] = useState("")
   const [scrollY, setScrollY] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(()=>{
+    fetch(`${API_BASE_URL}/api/v1/ping`)
+    .then(console.log("backend up"))
+    .catch((err)=> console.log("some error occured backend down", err))
+  },[])
 
   // Handle scroll for parallax effects
   useEffect(() => {
