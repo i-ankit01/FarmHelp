@@ -3,7 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncError = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 
-// ✅ Register Company
+//  Register Company
 exports.registerCompany = catchAsyncError(async (req, res, next) => {
   const { firstName, lastName, contactNo, companyName, email, gst, password, orders } = req.body;
 
@@ -21,7 +21,7 @@ exports.registerCompany = catchAsyncError(async (req, res, next) => {
   sendToken(user, 201, res);
 });
 
-// ✅ Login Company
+//  Login Company
 exports.loginCompany = catchAsyncError(async (req, res, next) => {
   const { email, password, contactNo } = req.body;
 
@@ -50,7 +50,7 @@ exports.loginCompany = catchAsyncError(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// ✅ Get all Companies
+//  Get all Companies
 exports.getCompanies = catchAsyncError(async (req, res, next) => {
   const companies = await Company.find();
   res.status(200).json({
@@ -59,7 +59,7 @@ exports.getCompanies = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// ✅ Get Company by ID
+//  Get Company by ID
 exports.getCompanyById = catchAsyncError(async (req, res, next) => {
   const company = await Company.findById(req.params.id);
   if (!company) {
@@ -72,7 +72,7 @@ exports.getCompanyById = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// ✅ Place an Order (Company orders from a Farmer)
+// Place an Order (Company orders from a Farmer)
 exports.placeOrder = catchAsyncError(async (req, res, next) => {
   const { farmerId, crops, weight, amount } = req.body;
 

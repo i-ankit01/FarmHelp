@@ -17,23 +17,23 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV === "PRODUCTION") {
     let error = new ErrorHandler(err.message, err.statusCode);
 
-    // ❌ Invalid Mongoose Object ID
+    //  Invalid Mongoose Object ID
     if (err.name === "CastError") {
       error = new ErrorHandler(`Resource not found. Invalid ${err.path}`, 400);
     }
 
-    // ❌ Mongoose Validation Error
+    //  Mongoose Validation Error
     if (err.name === "ValidationError") {
       const message = Object.values(err.errors).map((val) => val.message).join(", ");
       error = new ErrorHandler(message, 400);
     }
 
-    // ❌ Duplicate Key Error (MongoDB unique fields)
+    //  Duplicate Key Error (MongoDB unique fields)
     if (err.code === 11000) {
       error = new ErrorHandler(`Duplicate ${Object.keys(err.keyValue)} entered.`, 400);
     }
 
-    // ❌ JWT Errors (Invalid or Expired Tokens)
+    //  JWT Errors (Invalid or Expired Tokens)
     if (err.name === "JsonWebTokenError") {
       error = new ErrorHandler("Invalid token. Please log in again!", 401);
     }

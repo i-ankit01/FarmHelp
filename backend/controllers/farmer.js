@@ -5,7 +5,7 @@ const ApiFeatures = require("../utils/apiFeatures");
 const catchAsyncError = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 
-// ✅ Register Farmer
+// Register Farmer
 exports.registerFarmer = catchAsyncError(async (req, res, next) => {
   const { firstName, lastName, contactNo, email, aadhar, land, password, crops, orders } = req.body;
 
@@ -24,7 +24,7 @@ exports.registerFarmer = catchAsyncError(async (req, res, next) => {
   sendToken(user, 201, res);
 });
 
-// ✅ Login Farmer
+// Login Farmer
 exports.loginFarmer = catchAsyncError(async (req, res, next) => {
   const { email, password, contactNo } = req.body;
   if (!password) {
@@ -52,7 +52,7 @@ exports.loginFarmer = catchAsyncError(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// ✅ Get all farmers
+// Get all farmers
 exports.getFarmers = catchAsyncError(async (req, res, next) => {
   const farmers = await Farmer.find(); // Fetch all farmers from DB
     res.status(200).json({
@@ -61,7 +61,7 @@ exports.getFarmers = catchAsyncError(async (req, res, next) => {
     });
   })
 
-// ✅ Get a single farmer by ID
+// Get a single farmer by ID
 exports.getFarmerById = catchAsyncError(async (req, res, next) => {
   const farmer = await Farmer.findById(req.params.id).populate("orders");
   if (!farmer) {
@@ -74,7 +74,7 @@ exports.getFarmerById = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// ✅ Update farmer profile
+// Update farmer profile
 exports.updateFarmerProfile = catchAsyncError(async (req, res, next) => {
   let farmer = await Farmer.findById(req.params.id);
   if (!farmer) {
@@ -92,7 +92,7 @@ exports.updateFarmerProfile = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// ✅ Delete a farmer
+//  Delete a farmer
 // exports.deleteFarmer = catchAsyncError(async (req, res, next) => {
 //   const farmer = await Farmer.findById(req.params.id);
 //   if (!farmer) {
@@ -107,7 +107,7 @@ exports.updateFarmerProfile = catchAsyncError(async (req, res, next) => {
 //   });
 // });
 
-// ✅ Accept an order from a company
+//  Accept an order from a company
 exports.acceptOrder = catchAsyncError(async (req, res, next) => {
   const farmer = await Farmer.findById(req.params.id);
   if (!farmer) {
@@ -176,6 +176,10 @@ exports.completeOrder = catchAsyncError(async (req, res, next) => {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
 });
+
+exports.pingBackend = (req, res)=>{
+  res.send("backend up")
+}
 
 
 

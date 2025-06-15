@@ -3,7 +3,7 @@ const Farmer = require("../models/farmer"); // Change to Company if needed
 const catchAsyncErrors = require("./catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 
-// ✅ Middleware to check if user is authenticated
+//  Middleware to check if user is authenticated
 exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
   let token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 

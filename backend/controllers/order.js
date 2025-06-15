@@ -4,29 +4,29 @@ const Company = require("../models/company");
 const catchAsyncError = require("../middlewares/catchAsyncErrors");
 const Order = require("../models/order")
 
-// ✅ Create a new order and link it to both Farmer & Company
+// Create a new order and link it to both Farmer & Company
 exports.createOrder = catchAsyncError(async (req, res, next) => {
   const {companyName, farmerName, farmerId, crop, price, demandWeight, companyId } = req.body;
   console.log(req.body)
 
-  // 🔹 Validate required fields
+  //  Validate required fields
   if (!companyName || !farmerName || !farmerId || !crop || !price || !demandWeight || !companyId) {
     return next(new ErrorHandler("All fields are required", 400));
   }
 
-  // 🔹 Check if Farmer exists
+  //  Check if Farmer exists
   const farmer = await Farmer.findById(farmerId);
   if (!farmer) {
     return next(new ErrorHandler("Farmer not found", 404));
   }
 
-  // 🔹 Check if Company exists
+  //  Check if Company exists
   const company = await Company.findById(companyId);
   if (!company) {
     return next(new ErrorHandler("Company not found", 404));
   }
 
-  // 🔹 Create the order in the Order collection
+  //  Create the order in the Order collection
   const newOrder = await Order.create({
     companyName : companyName,
     farmerName : farmerName,
@@ -39,7 +39,7 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
     uniqueKey: Number(`${Date.now()}${Math.floor(Math.random() * 100000)}`)
   });
 
-  // 🔹 Push order ID to Farmer's orders array
+  //  Push order ID to Farmer's orders array
   farmer.orders.push({
     companyName: newOrder.companyName,
     farmerName: newOrder.farmerName,
@@ -54,7 +54,7 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
   await farmer.save();
   console.log("orders pushed in farmeres")
 
-  // 🔹 Push order ID to Company's orders array
+  //  Push order ID to Company's orders array
   try {
     company.orders.push({
         companyName: newOrder.companyName,
@@ -65,7 +65,7 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
         quantity: newOrder.quantity,
         price: newOrder.price,
         status: newOrder.status,
-        uniqueKey : newOrder.uniqueKey // Ensure status field is explicitly included
+        uniqueKey : newOrder.uniqueKey
       });
     await company.save();
   } catch (error) {
