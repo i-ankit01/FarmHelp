@@ -135,7 +135,7 @@ export default function LandingPage() {
                   <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-green-700 via-green-500 to-orange-500 animate-gradient">
                     Direct Farm to Business Connection
                   </h1>
-                  <p className="max-w-[600px] text-gray-700 md:text-xl relative ml-2 md:ml-0">
+                  <p className="max-w-[600px] text-gray-700 md:text-xl relative ml-2 md:ml-2  ">
                     <span className="relative z-10 ">
                       Eliminate middlemen and maximize your profits. Connect directly with businesses looking for your
                       crops.
