@@ -5,6 +5,7 @@ const { default: axios } = require("axios");
 const cors = require("cors");
 
 const app = express();
+app.use(express.json());
 
 // app.use(cors({
 //   origin: "http://localhost:5173", 
@@ -12,7 +13,8 @@ const app = express();
 // }));
 const allowedOrigins = [
   "http://localhost:5173",           
-  "https://farm-help-eight.vercel.app"  
+  "https://farm-help-eight.vercel.app",  
+  "https://www.farm-help-eight.vercel.app",  
 ];
 
 app.use(cors({
