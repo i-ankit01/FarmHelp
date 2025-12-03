@@ -7,6 +7,6 @@ const cropSchema = new mongoose.Schema({
     trim: true,
     unique: true, // Ensures no duplicate crop names (optional)
   },
-}, { timestamps: true }); // Adds createdAt and updatedAt fields
+}, { timestamps: true });
 
 module.exports = mongoose.model("Crop", cropSchema);

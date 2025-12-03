@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {jwtDecode} from "jwt-decode"; // ✅ Fix import
+import {jwtDecode} from "jwt-decode";
 
 // 🔹 Async thunk to fetch logged-in company data
 export const fetchCompanyData = createAsyncThunk("company/fetchCompanyData", async () => {
@@ -7,8 +7,8 @@ export const fetchCompanyData = createAsyncThunk("company/fetchCompanyData", asy
     const company_token = localStorage.getItem("company_token");
     if (!company_token) throw new Error("No company_token found");
 
-    const decodedToken = jwtDecode(company_token); // ✅ Fix variable name
-    const companyId = decodedToken.id; // Get the company ID from company_token
+    const decodedToken = jwtDecode(company_token);
+    const companyId = decodedToken.id;
 
     const response = await fetch(`${backendUrl}/api/v1/company/${companyId}`, {
         method: "GET",
@@ -37,7 +37,7 @@ const companySlice = createSlice({
     reducers: {
         logoutCompany: (state) => {
             state.company = null;
-            localStorage.removeItem("company_token"); // ✅ Clear token on logout
+            localStorage.removeItem("company_token"); // Clear token on logout
         },
     },
     extraReducers: (builder) => {

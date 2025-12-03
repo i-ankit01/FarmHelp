@@ -68,26 +68,26 @@ const farmerSchema = new mongoose.Schema({
     select: false,
   },
   crops: {
-    type: [String], // ✅ Array of crop names
+    type: [String], 
     default: [],
   },
   orders: [orderSubSchema],
 });
 
 
-// ✅ Encrypt password before saving
+// Encrypt password before saving
 farmerSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-// ✅ Compare user password
+// Compare user password
 farmerSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// ✅ Return JSON Web Token (JWT)
+// Return JSON Web Token (JWT)
 farmerSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_TIME || "7d",

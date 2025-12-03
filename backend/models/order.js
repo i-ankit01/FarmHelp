@@ -19,20 +19,20 @@ const orderSchema = new mongoose.Schema({
   },
   buyer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Company", // ✅ References Company model
+    ref: "Company",
     required: [true, "Buyer (Company) is required"],
   },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Farmer", // ✅ References Farmer model
+    ref: "Farmer",
     required: [true, "Seller (Farmer) is required"],
   },
   uniqueKey : Number,
   status: {
     type: String,
     enum: ["Pending", "Accepted", "Rejected", "Completed"],
-    default: "Pending", // ✅ Default order status
+    default: "Pending",
   },
-}, { timestamps: true }); // ✅ Adds createdAt & updatedAt fields
+}, { timestamps: true });
 
 module.exports = mongoose.model("Order", orderSchema);

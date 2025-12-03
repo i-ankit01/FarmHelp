@@ -50,7 +50,7 @@ const userSlice = createSlice({
         user: null,
         status: "idle",
         error: null,
-        farmers: [], // ✅ Add farmers state
+        farmers: [], // Add farmers state
         farmersStatus: "idle",
         farmersError: null
     },
@@ -73,7 +73,7 @@ const userSlice = createSlice({
                 state.status = "failed";
                 state.error = action.error.message;
             })
-            // ✅ Handle fetchFarmers
+            //Handle fetchFarmers
             .addCase(fetchFarmers.pending, (state) => {
                 state.farmersStatus = "loading";
             })
