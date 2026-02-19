@@ -1,97 +1,154 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
-
 import "remixicon/fonts/remixicon.css";
 import { Link } from "react-router-dom";
 import { ButtonLink } from "../components/ButtonLink";
+import { User, Mail, Lock, Phone, Building2, FileText, ArrowRight } from "lucide-react";
+import logo from "../assets//1749736593810.png";
+import '../animations/companysingup.css';
 
 export function CompanySignup({ className, ...props }) {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    contact: "",
+    companyName: "",
+    gstNumber: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
   return (
     <>
+
       <Header />
-      <div className="w-full mt-5 flex justify-center items-center">
-            <ButtonLink text="User? Sign Up as User" to="/signup/user" />
-            </div>
-      <div className="flex justify-center items-center mt-5">
-        <div className={`flex flex-col gap-6 w-full max-w-lg ${className}`} {...props}>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-6 md:p-8">
-              {/* Signup Form */}
-              <form className="flex flex-col gap-6">
-                <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">Register Your Company</h1>
-                  <p className="text-gray-600">Sign up for Farm Help</p>
-                </div>
 
-                {/* First Name & Last Name */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="first-name" className="font-medium">First Name</label>
-                    <input id="first-name" type="text" required className="p-2 border rounded-md w-full" />
-                  </div>
-                  <div>
-                    <label htmlFor="last-name" className="font-medium">Last Name</label>
-                    <input id="last-name" type="text" required className="p-2 border rounded-md w-full" />
-                  </div>
-                </div>
+      <div className="csignup-page">
+        {/* Top strip */}
+        <div className="csignup-top-strip">
+          <a href="/" className="csignup-brand">
+            <img src={logo} alt="Farm Help" />
+            <span className="csignup-brand-name">Farm <span>Help</span></span>
+          </a>
+          <ButtonLink text="User? Sign Up as User" to="/signup/user" />
+        </div>
 
-                {/* Email */}
-                <div className="grid gap-2">
-                  <label htmlFor="email" className="font-medium">Email</label>
-                  <input id="email" type="email" required className="p-2 border rounded-md w-full" />
-                </div>
-
-                {/* Contact No. */}
-                <div className="grid gap-2">
-                  <label htmlFor="contact" className="font-medium">Contact No.</label>
-                  <input id="contact" type="text" required className="p-2 border rounded-md w-full" />
-                </div>
-
-                {/* Company Name */}
-                <div className="grid gap-2">
-                  <label htmlFor="company-name" className="font-medium">Company Name</label>
-                  <input id="company-name" type="text" required className="p-2 border rounded-md w-full" />
-                </div>
-
-                {/* GST Number */}
-                <div className="grid gap-2">
-                  <label htmlFor="gst-number" className="font-medium">GST Number</label>
-                  <input id="gst-number" type="text" required className="p-2 border rounded-md w-full" />
-                </div>
-
-                {/* Password & Confirm Password */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="password" className="font-medium">Password</label>
-                    <input id="password" type="password" required className="p-2 border rounded-md w-full" />
-                  </div>
-                  <div>
-                    <label htmlFor="confirm-password" className="font-medium">Confirm Password</label>
-                    <input id="confirm-password" type="password" required className="p-2 border rounded-md w-full" />
-                  </div>
-                </div>
-
-                {/* Signup Button */}
-                <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded-md">
-                  Sign Up
-                </button>
-
-                {/* Already have an account? */}
-                <div className="text-center text-sm">
-                  Already have an account?{" "}
-                  <Link to="/signin/company" className="underline hover:text-blue-600">Login</Link>
-                </div>
-              </form>
-            </div>
+        {/* Card */}
+        <div className="csignup-card">
+          {/* Header */}
+          <div className="csignup-card-header">
+            <div className="csignup-label">Company Account</div>
+            <h1 className="csignup-card-title">Register Your Company</h1>
+            <p className="csignup-card-sub">Connect directly with thousands of verified farmers across India</p>
           </div>
 
-          {/* Terms & Conditions */}
-          <div className="text-center text-xs text-gray-500">
-            By clicking continue, you agree to our{" "}
-            <a href="#" className="underline hover:text-blue-600">Terms of Service</a>{" "}
-            and{" "}
-            <a href="#" className="underline hover:text-blue-600">Privacy Policy</a>.
-          </div>
+          {/* Form */}
+          <form>
+            <div className="csignup-form-body">
+
+              {/* Contact Person */}
+              <div className="form-section">
+                <div className="form-section-title">Contact Person</div>
+                <div className="grid-2">
+                  <div className="field">
+                    <label className="field-label">First Name</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><User size={15} /></span>
+                      <input id="firstName" type="text" required className="auth-input" placeholder="John" onChange={handleChange} />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="field-label">Last Name</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><User size={15} /></span>
+                      <input id="lastName" type="text" required className="auth-input" placeholder="Smith" onChange={handleChange} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Details */}
+              <div className="form-section">
+                <div className="form-section-title">Contact Details</div>
+                <div className="grid-2">
+                  <div className="field">
+                    <label className="field-label">Email Address</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Mail size={15} /></span>
+                      <input id="email" type="email" required className="auth-input" placeholder="company@email.com" onChange={handleChange} />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="field-label">Contact Number</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Phone size={15} /></span>
+                      <input id="contact" type="text" required className="auth-input" placeholder="+91 00000 00000" onChange={handleChange} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Company Info */}
+              <div className="form-section">
+                <div className="form-section-title">Company Information</div>
+                <div className="grid-2">
+                  <div className="field">
+                    <label className="field-label">Company Name</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Building2 size={15} /></span>
+                      <input id="companyName" type="text" required className="auth-input" placeholder="Acme Foods Pvt. Ltd." onChange={handleChange} />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="field-label">GST Number</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><FileText size={15} /></span>
+                      <input id="gstNumber" type="text" required className="auth-input" placeholder="22AAAAA0000A1Z5" onChange={handleChange} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Password */}
+              <div className="form-section">
+                <div className="form-section-title">Set Password</div>
+                <div className="grid-2">
+                  <div className="field">
+                    <label className="field-label">Password</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Lock size={15} /></span>
+                      <input id="password" type="password" required className="auth-input" placeholder="••••••••" onChange={handleChange} />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="field-label">Confirm Password</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Lock size={15} /></span>
+                      <input id="confirmPassword" type="password" required className="auth-input" placeholder="••••••••" onChange={handleChange} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" className="btn-csignup">
+                Register Company <ArrowRight size={17} />
+              </button>
+            </div>
+
+            {/* Footer */}
+            <div className="csignup-card-footer">
+              <p>Already have an account? <Link to="/signin/company">Login</Link></p>
+              <p className="csignup-terms">
+                By signing up, you agree to our{" "}
+                <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </>

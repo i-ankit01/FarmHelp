@@ -5,6 +5,9 @@ import "remixicon/fonts/remixicon.css";
 import { Link } from "react-router-dom";
 import { ButtonLink } from "../components/ButtonLink";
 import axios from "axios";
+import { Mail, Lock, ArrowRight, ChevronRight, Building2, TrendingUp, ShieldCheck, Handshake } from "lucide-react";
+import logo from "../assets//1749736593810.png";
+import '../animations/companylogin.css';
 
 export function CompanyLogin({ className, ...props }) {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -16,17 +19,16 @@ export function CompanyLogin({ className, ...props }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    
     try {
-      const response = await axios.post(`${backendUrl}/api/v1/company/login`, {
-        email,
-        password,
-      }, { withCredentials: true });
-      console.log(response)
-
+      const response = await axios.post(
+        `${backendUrl}/api/v1/company/login`,
+        { email, password },
+        { withCredentials: true }
+      );
+      console.log(response);
       if (response.data.success) {
         localStorage.setItem("company_token", response.data.token);
-        navigate("/dashboard/company"); // Redirect to dashboard after login
+        navigate("/dashboard/company");
       }
     } catch (error) {
       setError(error.response?.data?.message || "Login failed. Try again.");
@@ -35,98 +37,124 @@ export function CompanyLogin({ className, ...props }) {
 
   return (
     <>
+
       <Header />
-      <div className="w-full mt-5 flex justify-center items-center">
-        <ButtonLink text="User? Login as User" to="/signin/user" />
-      </div>
-      <div className="flex justify-center items-center mt-5">
-        <div className={`flex flex-col gap-6 w-full max-w-lg ${className}`} {...props}>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-6 md:p-8">
-              {/* Login Form */}
-              <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-                <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">Welcome back (Company Login)</h1>
-                  <p className="text-gray-600">Login to your Farm Help account</p>
-                </div>
 
-                {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      <div className="clogin-page">
+        {/* ── LEFT PANEL ── */}
+        <div className="clogin-left">
+          <div className="clogin-left-glow" />
+          <div className="clogin-left-content">
+            <a href="/" className="clogin-brand">
+              <img src={logo} alt="Farm Help" />
+              <span className="clogin-brand-name">Farm <span>Help</span></span>
+            </a>
 
-                {/* Email */}
-                <div className="grid gap-2">
-                  <label htmlFor="email" className="font-medium">Email</label>
+            <div className="clogin-left-label">For Companies</div>
+
+            <h2 className="clogin-left-title">
+              Source Directly<br />
+              From <em>Verified</em><br />
+              Farmers.
+            </h2>
+
+            <p className="clogin-left-desc">
+              Connect with thousands of farmers across India. Get fresh produce at better prices — no middlemen, complete transparency.
+            </p>
+
+            <ul className="clogin-features">
+              {[
+                "Access to 5,000+ verified farmers",
+                "Consistent quality and supply",
+                "Transparent pricing",
+                "Real-time delivery tracking",
+              ].map((item) => (
+                <li key={item} className="clogin-feature-item">
+                  <span className="clogin-feature-dot" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="clogin-deco-text">BIZ</div>
+        </div>
+
+        {/* ── RIGHT PANEL ── */}
+        <div className="clogin-right">
+          <div className="clogin-box">
+            <div className="clogin-box-header">
+              <div className="clogin-box-icon"><Building2 size={24} /></div>
+              <h1 className="clogin-box-title">Company Login</h1>
+              <p className="clogin-box-sub">Welcome back — access your company dashboard</p>
+            </div>
+
+            {/* Switch to user */}
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
+              <ButtonLink text="User? Login as User" to="/signin/user" />
+            </div>
+
+            {error && <div className="clogin-error">{error}</div>}
+
+            <form className="clogin-form" onSubmit={handleSubmit}>
+              <div className="form-field-wrap">
+                <label className="form-label-sm">Email Address</label>
+                <div className="input-wrap">
+                  <span className="input-icon"><Mail size={16} /></span>
                   <input
-                    id="email"
                     type="email"
-                    placeholder="user@gmail.com"
+                    placeholder="company@example.com"
                     required
-                    className="p-2 border rounded-md w-full"
+                    className="auth-input"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
+              </div>
 
-                {/* Password */}
-                <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <label htmlFor="password" className="font-medium">Password</label>
-                    <a href="#" className="ml-auto text-sm underline hover:text-blue-600">
-                      Forgot your password?
-                    </a>
-                  </div>
+              <div className="form-field-wrap">
+                <label className="form-label-sm">Password</label>
+                <div className="input-wrap">
+                  <span className="input-icon"><Lock size={16} /></span>
                   <input
-                    id="password"
                     type="password"
                     required
-                    className="p-2 border rounded-md w-full"
+                    className="auth-input"
+                    placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
+              </div>
 
-                {/* Login Button */}
-                <button
-                  type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded-md"
-                >
-                  Login
-                </button>
+              <div className="forgot-row">
+                <a href="#" className="forgot-link">Forgot password?</a>
+              </div>
 
-                {/* OR Divider */}
-                <div className="relative text-center text-sm">
-                  <span className="bg-white px-2 text-gray-500">Or continue with</span>
-                </div>
+              <button type="submit" className="btn-clogin">
+                Login <ArrowRight size={16} />
+              </button>
+            </form>
 
-                {/* Social Login Buttons */}
-                <div className="grid grid-cols-3 gap-4">
-                  <button className="w-18 cursor-pointer border p-1 rounded-md flex justify-center items-center hover:bg-gray-100 transition">
-                    <i className="ri-apple-fill text-2xl"></i>
-                  </button>
-                  <button className="w-18 cursor-pointer border p-1 rounded-md flex justify-center items-center hover:bg-gray-100 transition">
-                    <i className="ri-google-fill text-2xl"></i>
-                  </button>
-                  <button className="w-18 cursor-pointer border p-1 rounded-md flex justify-center items-center hover:bg-gray-100 transition">
-                    <i className="ri-meta-fill text-2xl"></i>
-                  </button>
-                </div>
-
-                {/* Signup Link */}
-                <div className="text-center text-sm">
-                  Don't have an account?{" "}
-                  <Link to="/signup/company" className="underline hover:text-blue-600">
-                    Sign up
-                  </Link>
-                </div>
-              </form>
+            <div className="social-divider">
+              <div className="social-divider-line" />
+              <span className="social-divider-text">Or continue with</span>
+              <div className="social-divider-line" />
             </div>
-          </div>
 
-          {/* Terms & Conditions */}
-          <div className="text-center text-xs text-gray-500">
-            By clicking continue, you agree to our{" "}
-            <a href="#" className="underline hover:text-blue-600">Terms of Service</a>{" "}
-            and{" "}
-            <a href="#" className="underline hover:text-blue-600">Privacy Policy</a>.
+            <div className="social-row">
+              <button className="social-btn"><i className="ri-apple-fill" /></button>
+              <button className="social-btn"><i className="ri-google-fill" /></button>
+              <button className="social-btn"><i className="ri-meta-fill" /></button>
+            </div>
+
+            <div className="clogin-footer" style={{ marginTop: "1.25rem" }}>
+              <p>Don't have an account? <Link to="/signup/company">Sign up</Link></p>
+            </div>
+
+            <p className="clogin-terms">
+              By signing in, you agree to FarmHelp's{" "}
+              <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </p>
           </div>
         </div>
       </div>

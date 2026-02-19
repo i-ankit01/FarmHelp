@@ -48,7 +48,7 @@ export function UserLogin({ className, ...props }) {
   };
 
   const redirectToCompanyLogin = () => {
-    window.location.href = "/company-login";
+    window.location.href = "/signin/company";
   };
 
   return (
@@ -164,7 +164,7 @@ export function UserLogin({ className, ...props }) {
             </div>
 
             <div className="login-footer-links">
-              <p>Don't have an account? <a href="#">Register now</a></p>
+              <p>Don't have an account? <a href="/signup/user">Register now</a></p>
               <button className="btn-company-link" onClick={redirectToCompanyLogin}>
                 Go to Company Login <ChevronRight size={14} />
               </button>

@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+          --cream: #F5F0E8;
+          --parchment: #EDE5D0;
+          --earth: #2C1A0E;
+          --bark: #4A2E1A;
+          --soil: #6B3F2A;
+          --amber: #D4820A;
+          --gold: #E8A830;
+          --sky: #2A4A6B;
+          --sky-light: #3A6491;
+          --white: #FDFAF5;
+        }
+
+        body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--earth); overflow-x: hidden; }
+
+        .csignup-page {
+          min-height: 100vh;
+          background: var(--cream);
+          padding: 2.5rem 1rem 4rem;
+        }
+
+        /* Top strip */
+        .csignup-top-strip {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          max-width: 860px;
+          margin: 0 auto 2.5rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .csignup-brand {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+        }
+
+        .csignup-brand img { width: 40px; height: 40px; object-fit: cover; border-radius: 8px; }
+
+        .csignup-brand-name {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.375rem;
+          font-weight: 700;
+          color: var(--earth);
+          letter-spacing: -0.02em;
+        }
+
+        .csignup-brand-name span { color: var(--amber); }
+
+        /* Card */
+        .csignup-card {
+          max-width: 860px;
+          margin: 0 auto;
+          background: var(--white);
+          border: 1px solid rgba(74,46,26,0.1);
+          border-radius: 4px;
+          overflow: hidden;
+        }
+
+        /* Card header */
+        .csignup-card-header {
+          background: var(--sky);
+          padding: 2.25rem 2.5rem;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .csignup-card-header::before {
+          content: 'BIZ';
+          position: absolute;
+          right: -10px; top: 50%;
+          transform: translateY(-50%);
+          font-family: 'Playfair Display', serif;
+          font-size: 6rem;
+          font-weight: 900;
+          color: rgba(255,255,255,0.04);
+          letter-spacing: -0.05em;
+          line-height: 1;
+          pointer-events: none;
+        }
+
+        .csignup-label {
+          font-size: 0.6875rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--gold);
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 0.5rem;
+        }
+
+        .csignup-label::before {
+          content: '';
+          display: block;
+          width: 20px; height: 1.5px;
+          background: var(--gold);
+        }
+
+        .csignup-card-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 1.875rem;
+          font-weight: 700;
+          color: var(--cream);
+          letter-spacing: -0.02em;
+        }
+
+        .csignup-card-sub {
+          font-size: 0.9rem;
+          color: rgba(245,240,232,0.5);
+          font-weight: 300;
+          margin-top: 4px;
+        }
+
+        /* Form body */
+        .csignup-form-body { padding: 2.5rem; }
+
+        .form-section { margin-bottom: 2rem; }
+
+        .form-section-title {
+          font-size: 0.6875rem;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--sky);
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .form-section-title::after {
+          content: '';
+          flex: 1;
+          height: 1px;
+          background: rgba(42,74,107,0.12);
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .field { display: flex; flex-direction: column; gap: 5px; }
+
+        .field-label {
+          font-size: 0.6875rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--soil);
+        }
+
+        .input-wrap { position: relative; }
+
+        .input-icon-left {
+          position: absolute;
+          left: 13px; top: 50%;
+          transform: translateY(-50%);
+          color: var(--sky);
+          pointer-events: none;
+          display: flex;
+          align-items: center;
+        }
+
+        .auth-input {
+          width: 100%;
+          height: 46px;
+          padding: 0 1rem 0 2.625rem;
+          background: var(--cream);
+          border: 1.5px solid rgba(74,46,26,0.15);
+          border-radius: 3px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.9375rem;
+          color: var(--earth);
+          outline: none;
+          transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .auth-input::placeholder { color: rgba(74,46,26,0.3); }
+
+        .auth-input:focus {
+          border-color: var(--sky);
+          box-shadow: 0 0 0 3px rgba(42,74,107,0.1);
+        }
+
+        .btn-csignup {
+          width: 100%;
+          height: 52px;
+          background: var(--sky);
+          color: var(--cream);
+          font-family: 'DM Sans', sans-serif;
+          font-size: 1rem;
+          font-weight: 600;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: all 0.25s ease;
+          letter-spacing: 0.01em;
+          margin-top: 0.5rem;
+        }
+
+        .btn-csignup:hover {
+          background: var(--sky-light);
+          transform: translateY(-1px);
+          box-shadow: 0 8px 24px rgba(42,74,107,0.25);
+        }
+
+        /* Card footer */
+        .csignup-card-footer {
+          background: var(--parchment);
+          padding: 1rem 2.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .csignup-card-footer p {
+          font-size: 0.875rem;
+          color: var(--soil);
+          font-weight: 300;
+        }
+
+        .csignup-card-footer a {
+          color: var(--sky);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.2s;
+        }
+
+        .csignup-card-footer a:hover { color: var(--bark); }
+
+        .csignup-terms {
+          font-size: 0.75rem;
+          color: rgba(74,46,26,0.45);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+          .csignup-page { padding: 1.5rem 0.75rem 3rem; }
+          .csignup-form-body { padding: 1.5rem 1.25rem; }
+          .csignup-card-header { padding: 1.75rem 1.25rem; }
+          .grid-2 { grid-template-columns: 1fr; }
+          .csignup-card-footer { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+          .csignup-top-strip { flex-direction: column; align-items: flex-start; }
+        }
+
+        @media (max-width: 480px) {
+          .csignup-card-title { font-size: 1.5rem; }
+        }
