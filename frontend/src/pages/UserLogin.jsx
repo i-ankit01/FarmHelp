@@ -4,6 +4,7 @@ import "remixicon/fonts/remixicon.css";
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../config";
 import logo from "../assets//1749736593810.png";
+import '../animations/signin.css';
 import {
   Leaf,
   Mail,
@@ -31,18 +32,13 @@ export function UserLogin({ className, ...props }) {
     try {
       const response = await fetch(`${API_BASE_URL}/api/v1/farmer/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
         credentials: "include",
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Login failed");
-      }
+      if (!response.ok) throw new Error(data.message || "Login failed");
 
       localStorage.setItem("token", data.token);
       navigate("/dashboard/user");
@@ -50,189 +46,136 @@ export function UserLogin({ className, ...props }) {
       setError(err.message);
     }
   };
+
   const redirectToCompanyLogin = () => {
     window.location.href = "/company-login";
   };
+
   return (
     <>
       <Header />
-      <div className="flex min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
-        <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-green-600 to-emerald-700 items-center justify-center p-12">
-          <div className="relative z-10 text-white">
-            <div className="text-4xl font-bold mb-6 fade-in">
-              <span className="flex items-center gap-2">
-                FarmHelp
-              </span>
+
+      <div className="login-page">
+        {/* ── LEFT PANEL ── */}
+        <div className="login-left">
+          <div className="login-left-glow" />
+
+          <div className="login-left-content">
+            <div className="login-brand">
+              <img src={logo} alt="Farm Help" />
+              <span className="login-brand-name">Farm <span>Help</span></span>
             </div>
 
-            <h2 className="text-2xl mb-6 fade-in delay-300">
-              Connecting Farmers Directly to Companies
+            <div className="login-left-label">For Farmers</div>
+
+            <h2 className="login-left-title">
+              Connecting Farmers<br />
+              <em>Directly to</em><br />
+              Companies.
             </h2>
 
-            <div className="fade-in delay-600">
-              <p className="text-lg mb-8">
-                Eliminate middlemen and maximize your profits
-              </p>
+            <p className="login-left-desc">
+              Eliminate middlemen and maximize your profits. Connect directly with businesses looking for your crops.
+            </p>
 
-              <ul className="space-y-4">
-                {[
-                  "Direct access to companies",
-                  "Better prices for your crops",
-                  "Transparent transactions",
-                  "Secure payment system",
-                ].map((item, index) => (
-                  <li
-                    key={index}
-                    className={`flex items-center gap-2 slide-in-left delay-${
-                      800 + index * 200
-                    }`}
-                  >
-                    <ChevronRight className="text-yellow-300" size={18} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="login-features">
+              {[
+                "Direct access to companies",
+                "Better prices for your crops",
+                "Transparent transactions",
+                "Secure payment system",
+              ].map((item) => (
+                <li key={item} className="login-feature-item">
+                  <span className="login-feature-dot" />
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="absolute right-10 top-20 float-animation">
-            <Sun size={60} className="text-yellow-300 opacity-80" />
-          </div>
-
-          <div className="absolute left-20 bottom-40 float-animation-slow">
-            <Cloud size={50} className="text-white opacity-30" />
-          </div>
-
-          <div className="absolute right-40 bottom-60 float-animation-reverse">
-            <Cloud size={40} className="text-white opacity-20" />
-          </div>
-
-          <div className="absolute left-40 bottom-20 float-animation-medium">
-            <Tractor size={80} className="text-yellow-400 opacity-70" />
-          </div>
-
-          <div className="absolute right-20 bottom-30 float-animation">
-            <Plant size={70} className="text-green-300 opacity-70" />
-          </div>
-
-          {/* Farm illustration */}
-          <img
-            src={"/placeholder.svg"}
-            alt="Farm Illustration"
-            className="absolute bottom-0 left-0 w-full opacity-20 object-cover"
-          />
+          <div className="login-left-deco-text">FARM</div>
         </div>
 
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-          <div className="w-full max-w-md fade-in">
-            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-              <div className="p-8 fade-in delay-200">
-                <div className="flex items-center justify-center mb-6">
-                  
-                    <img className="w-16 h-16 object-cover" src={logo} alt="logo" />
-                  
-                  <h1 className=" text-xl ml-2 md:text-3xl font-bold text-gray-800">
-                    Farmer Login
-                  </h1>
-                </div>
-
-                <p className="text-gray-600 text-center mb-8">
-                   For Testing Use : <br /> Email : ankitdemo@gmail.com <br /> Password : ankitdemo@123
-                </p>
-
-                {error && (
-                  <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-6 fade-in">
-                    {error}
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="relative slide-in-left delay-400">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <Mail className="text-green-600" size={18} />
-                    </div>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                      placeholder="Email Address"
-                      required
-                    />
-                  </div>
-
-                  <div className="relative slide-in-left delay-500">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <Lock className="text-green-600" size={18} />
-                    </div>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
-                      placeholder="Password"
-                      required
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between fade-in delay-600">
-                    <div className="flex items-center">
-                      <input
-                        id="remember-me"
-                        type="checkbox"
-                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                      />
-                      <label
-                        htmlFor="remember-me"
-                        className="ml-2 block text-sm text-gray-700"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                    <a
-                      href="#"
-                      className="text-sm font-medium text-green-600 hover:text-green-500"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center button-scale fade-in delay-700"
-                  >
-                    {isLoading ? (
-                      <span className="loading-spinner mr-2"></span>
-                    ) : null}
-                    <span>{isLoading ? "Signing In..." : "Sign In"}</span>
-                    {!isLoading && <ArrowRight className="ml-2" size={18} />}
-                  </button>
-                </form>
-
-                <div className="mt-8 text-center fade-in delay-800">
-                  <p className="text-gray-600 mb-4">
-                    Don't have an account?{" "}
-                    <a href="#" className="text-green-600 font-medium">
-                      Register now
-                    </a>
-                  </p>
-
-                  <button
-                    onClick={redirectToCompanyLogin}
-                    className="inline-flex items-center justify-center text-sm font-medium text-green-700 hover:text-green-800 transition-colors"
-                  >
-                    <span>Go to Company Login</span>
-                    <ChevronRight size={16} className="ml-1" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-green-50 p-4 text-center text-sm text-gray-600 fade-in delay-900">
-                By signing in, you agree to FarmHelp's Terms of Service and
-                Privacy Policy
-              </div>
+        {/* ── RIGHT PANEL ── */}
+        <div className="login-right">
+          <div className="login-box">
+            <div className="login-box-header">
+              <h1 className="login-box-title">Farmer Login</h1>
+              <p className="login-box-sub">Welcome back — sign in to your account</p>
             </div>
+
+            <div className="demo-box">
+              <strong>Demo Credentials</strong>
+              Email: ankitdemo@gmail.com<br />
+              Password: ankitdemo@123
+            </div>
+
+            {error && <div className="login-error">{error}</div>}
+
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="form-field-wrap">
+                <label className="form-label-sm">Email Address</label>
+                <div className="input-wrap">
+                  <span className="input-icon"><Mail size={16} /></span>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="auth-input"
+                    placeholder="your@email.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-field-wrap">
+                <label className="form-label-sm">Password</label>
+                <div className="input-wrap">
+                  <span className="input-icon"><Lock size={16} /></span>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="auth-input"
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-row-between">
+                <label className="remember-wrap">
+                  <input type="checkbox" id="remember-me" />
+                  Remember me
+                </label>
+                <a href="#" className="forgot-link">Forgot password?</a>
+              </div>
+
+              <button type="submit" className="btn-login" disabled={isLoading}>
+                {isLoading ? "Signing In…" : "Sign In"}
+                {!isLoading && <ArrowRight size={16} />}
+              </button>
+            </form>
+
+            <div className="login-divider">
+              <div className="login-divider-line" />
+              <span className="login-divider-text">or</span>
+              <div className="login-divider-line" />
+            </div>
+
+            <div className="login-footer-links">
+              <p>Don't have an account? <a href="#">Register now</a></p>
+              <button className="btn-company-link" onClick={redirectToCompanyLogin}>
+                Go to Company Login <ChevronRight size={14} />
+              </button>
+            </div>
+
+            <p className="login-terms">
+              By signing in, you agree to FarmHelp's{" "}
+              <a href="#" style={{ color: "var(--amber)", textDecoration: "underline" }}>Terms of Service</a>{" "}
+              and{" "}
+              <a href="#" style={{ color: "var(--amber)", textDecoration: "underline" }}>Privacy Policy</a>
+            </p>
           </div>
         </div>
       </div>

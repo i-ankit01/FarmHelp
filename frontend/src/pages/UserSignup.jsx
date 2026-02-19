@@ -2,6 +2,19 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonLink } from "../components/ButtonLink";
+import '../animations/signup.css';
+import {
+  User,
+  Mail,
+  Lock,
+  Phone,
+  CreditCard,
+  Tractor,
+  ArrowRight,
+  ChevronRight,
+  Leaf,
+} from "lucide-react";
+import logo from "../assets//1749736593810.png";
 
 export function UserSignup({ className, ...props }) {
   const navigate = useNavigate();
@@ -20,12 +33,10 @@ export function UserSignup({ className, ...props }) {
   const [error, setError] = useState("");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  // Handle Input Changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle Crop Selection
   const handleCropChange = (e) => {
     const { value, checked } = e.target;
     setFormData((prev) => ({
@@ -36,25 +47,20 @@ export function UserSignup({ className, ...props }) {
     }));
   };
 
-  // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
-  
     try {
       const response = await fetch(`${backendUrl}/api/v1/farmer/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-  
       const data = await response.json();
-      console.log("Response:", data); // Log the response
-  
+      console.log("Response:", data);
       if (response.ok) {
         alert("Signup Successful!");
         navigate("/signin/user");
@@ -66,109 +72,211 @@ export function UserSignup({ className, ...props }) {
       setError("Something went wrong! Try again.");
     }
   };
-  
+
+  const cropOptions = ["Rice", "Wheat", "Barley", "Oats", "Pulse", "Maize", "Sugarcane", "Others"];
 
   return (
     <>
       <Header />
-      <div className="w-full mt-5 flex justify-center items-center">
-        <ButtonLink text="Company? Sign Up as Company" to="/signup/company" />
-      </div>
 
-      <div className="flex justify-center items-center mt-5">
-        <div className={`flex flex-col gap-6 w-full max-w-lg ${className}`} {...props}>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-6 md:p-8">
-              <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
-                <div className="flex flex-col items-center text-center">
-                  <h1 className="text-2xl font-bold">Create an Account</h1>
-                  <p className="text-gray-600">Sign up for Farm Help</p>
-                </div>
+      <div className="signup-page">
+        {/* Top strip */}
+        <div className="signup-top-strip">
+          <a href="/" className="signup-brand">
+            <img src={logo} alt="Farm Help" />
+            <span className="signup-brand-name">Farm <span>Help</span></span>
+          </a>
+          <ButtonLink text="Company? Sign Up as Company" to="/signup/company" />
+        </div>
 
-                {/* First Name & Last Name */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-medium">First Name</label>
-                    <input name="firstName" type="text" required className="p-2 border rounded-md w-full" onChange={handleChange} />
+        {/* Card */}
+        <div className="signup-card">
+          {/* Header */}
+          <div className="signup-card-header">
+            <div className="signup-label">New Account</div>
+            <h1 className="signup-card-title">Create Your Farmer Profile</h1>
+            <p className="signup-card-sub">Join thousands of farmers connecting directly with businesses</p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit}>
+            <div className="signup-form-body">
+
+              {/* Personal Info */}
+              <div className="form-section">
+                <div className="form-section-title">Personal Information</div>
+                <div className="grid-2">
+                  <div className="field">
+                    <label className="field-label">First Name</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><User size={15} /></span>
+                      <input
+                        name="firstName"
+                        type="text"
+                        required
+                        className="auth-input"
+                        placeholder="John"
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="font-medium">Last Name</label>
-                    <input name="lastName" type="text" required className="p-2 border rounded-md w-full" onChange={handleChange} />
+                  <div className="field">
+                    <label className="field-label">Last Name</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><User size={15} /></span>
+                      <input
+                        name="lastName"
+                        type="text"
+                        required
+                        className="auth-input"
+                        placeholder="Smith"
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact */}
+              <div className="form-section">
+                <div className="form-section-title">Contact Details</div>
+                <div className="grid-1" style={{ gap: '1rem' }}>
+                  <div className="field">
+                    <label className="field-label">Email Address</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Mail size={15} /></span>
+                      <input
+                        name="email"
+                        type="email"
+                        required
+                        className="auth-input"
+                        placeholder="your@email.com"
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid-2" style={{ marginTop: '1rem' }}>
+                  <div className="field">
+                    <label className="field-label">Contact Number</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Phone size={15} /></span>
+                      <input
+                        name="contactNo"
+                        type="text"
+                        required
+                        className="auth-input"
+                        placeholder="+91 00000 00000"
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="field-label">Aadhar Card No.</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><CreditCard size={15} /></span>
+                      <input
+                        name="aadhar"
+                        type="text"
+                        required
+                        className="auth-input"
+                        placeholder="XXXX XXXX XXXX"
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Farm Info */}
+              <div className="form-section">
+                <div className="form-section-title">Farm Information</div>
+                <div className="field" style={{ marginBottom: '1rem' }}>
+                  <label className="field-label">Land in Acres</label>
+                  <div className="input-wrap">
+                    <span className="input-icon-left"><Tractor size={15} /></span>
+                    <input
+                      name="land"
+                      type="number"
+                      required
+                      className="auth-input"
+                      placeholder="e.g. 5"
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
 
-                {/* Email */}
-                <div className="grid gap-2">
-                  <label className="font-medium">Email</label>
-                  <input name="email" type="email" required className="p-2 border rounded-md w-full" onChange={handleChange} />
-                </div>
-
-                {/* Contact No. & Aadhar No. */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-medium">Contact No.</label>
-                    <input name="contactNo" type="text" required className="p-2 border rounded-md w-full" onChange={handleChange} />
-                  </div>
-                  <div>
-                    <label className="font-medium">Aadhar Card No.</label>
-                    <input name="aadhar" type="text" required className="p-2 border rounded-md w-full" onChange={handleChange} />
-                  </div>
-                </div>
-
-                {/* Land in Acres */}
-                <div className="grid gap-2">
-                  <label className="font-medium">Land in Acres</label>
-                  <input name="land" type="number" required className="p-2 border rounded-md w-full" onChange={handleChange} />
-                </div>
-
-                {/* Crop Selection */}
-                <div className="grid gap-2">
-                  <label className="font-medium">Select the crops which you grow:</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {["Rice", "Wheat", "Barley", "Oats", "Pulse", "Maize", "Sugarcane", "Others"].map((crop) => (
-                      <label key={crop} className="flex items-center">
-                        <input type="checkbox" value={crop} onChange={handleCropChange} className="mr-2" /> {crop}
+                <div className="field">
+                  <label className="field-label" style={{ marginBottom: '0.75rem' }}>Crops You Grow</label>
+                  <div className="crop-grid">
+                    {cropOptions.map((crop) => (
+                      <label key={crop} className="crop-checkbox-label">
+                        <input
+                          type="checkbox"
+                          value={crop}
+                          onChange={handleCropChange}
+                        />
+                        {crop}
                       </label>
                     ))}
                   </div>
                 </div>
+              </div>
 
-                {/* Password & Confirm Password */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="font-medium">Password</label>
-                    <input name="password" type="password" required className="p-2 border rounded-md w-full" onChange={handleChange} />
+              {/* Password */}
+              <div className="form-section">
+                <div className="form-section-title">Set Password</div>
+                <div className="grid-2">
+                  <div className="field">
+                    <label className="field-label">Password</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Lock size={15} /></span>
+                      <input
+                        name="password"
+                        type="password"
+                        required
+                        className="auth-input"
+                        placeholder="••••••••"
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="font-medium">Confirm Password</label>
-                    <input name="confirmPassword" type="password" required className="p-2 border rounded-md w-full" onChange={handleChange} />
+                  <div className="field">
+                    <label className="field-label">Confirm Password</label>
+                    <div className="input-wrap">
+                      <span className="input-icon-left"><Lock size={15} /></span>
+                      <input
+                        name="confirmPassword"
+                        type="password"
+                        required
+                        className="auth-input"
+                        placeholder="••••••••"
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Show Error (if any) */}
-                {error && <p className="text-red-600 text-center">{error}</p>}
+              {error && <div className="signup-error">{error}</div>}
 
-                {/* Signup Button */}
-                <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded-md">
-                  Sign Up
-                </button>
-
-                {/* Already have an account? */}
-                <div className="text-center text-sm">
-                  Already have an account?{" "}
-                  <Link to="/signin/user" className="underline hover:text-blue-600">Login</Link>
-                </div>
-              </form>
+              <button type="submit" className="btn-signup">
+                Create Account <ArrowRight size={17} />
+              </button>
             </div>
-          </div>
 
-          {/* Terms & Conditions */}
-          <div className="text-center text-xs text-gray-500">
-            By clicking continue, you agree to our{" "}
-            <a href="#" className="underline hover:text-blue-600">Terms of Service</a>{" "}
-            and{" "}
-            <a href="#" className="underline hover:text-blue-600">Privacy Policy</a>.
-          </div>
+            {/* Footer */}
+            <div className="signup-card-footer">
+              <p>
+                Already have an account?{" "}
+                <Link to="/signin/user">Sign In</Link>
+              </p>
+              <p className="signup-terms">
+                By signing up, you agree to our{" "}
+                <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </>
